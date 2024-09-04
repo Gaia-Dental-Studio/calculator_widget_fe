@@ -1,68 +1,119 @@
+"use client";
+
+import {useEffect} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
+import 'owl.carousel/dist/assets/owl.carousel.css'; // Owl Carousel CSS
+import 'owl.carousel/dist/assets/owl.theme.default.css'; // Owl Carousel Theme CSS
+
 
 export default function Dashboard() {
+    useEffect(() => {
+        $(document).ready(function () {
+            // Inisialisasi carousel pertama
+            $(".owl-carousel").owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+                navText: [],
+                autoplay: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 2
+                    },
+                    1000: {
+                        items: 4
+                    }
+                }
+            });
+
+            // Inisialisasi carousel kedua
+            $(".owl-2").owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+                navText: [],
+                autoplay: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    600: {
+                        items: 2
+                    },
+                    1000: {
+                        items: 4
+                    }
+                }
+            });
+        });
+    }, []);
+
     return (
-        <main>        <div class="hero_area">
-            <header class="header_section">
-                <div class="container">
-                    <div class="top_contact-container">
-                        <div class="tel_container">
+        <main>        <div className="hero_area_">
+            <header className="header_section">
+                <div className="container">
+                    <div className="top_contact-container">
+                        <div className="tel_container">
                             <a href="">
                                 <img src="/images/telephone-symbol-button.png" alt="" /> +01 1234567890
                             </a>
                         </div>
-                        <div class="social-container">
+                        <div className="social-container">
                             <a href="">
-                                <img src="/images/fb.png" alt="" class="s-1" />
+                                <img src="/images/fb.png" alt="" className="s-1" />
                             </a>
                             <a href="">
-                                <img src="/images/twitter.png" alt="" class="s-2" />
+                                <img src="/images/twitter.png" alt="" className="s-2" />
                             </a>
                             <a href="">
-                                <img src="/images/instagram.png" alt="" class="s-3" />
+                                <img src="/images/instagram.png" alt="" className="s-3" />
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="container-fluid">
-                    <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
-                        <a class="navbar-brand" href="index.html">
+                <div className="container-fluid">
+                    <nav className="navbar navbar-expand-lg custom_nav-container pt-3">
+                        <a className="navbar-brand" href="index.html">
                             <img src="images/logo.png" alt="" />
                             <span>
                                 Medion
                             </span>
                         </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
+                            <span className="navbar-toggler-icon"></span>
                         </button>
 
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <div class="d-flex  flex-column flex-lg-row align-items-center w-100 justify-content-between">
-                                <ul class="navbar-nav  ">
-                                    <li class="nav-item active">
-                                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                            <div className="d-flex  flex-column flex-lg-row align-items-center w-100 justify-content-between">
+                                <ul className="navbar-nav  ">
+                                    <li className="nav-item active">
+                                        <a className="nav-link" href="index.html">Home <span className="sr-only">(current)</span></a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="about.html"> About </a>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="about.html"> About </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="medicine.html"> Medicine </a>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="medicine.html"> Medicine </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="buy.html"> Online Buy </a>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="buy.html"> Online Buy </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="news.html"> News </a>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="news.html"> News </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="contact.html">Contact us</a>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="contact.html">Contact us</a>
                                     </li>
                                 </ul>
-                                <form class="form-inline ">
+                                <form className="form-inline ">
                                     <input type="search" placeholder="Search" />
-                                    <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
+                                    <button className="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
                                 </form>
-                                <div class="login_btn-contanier ml-0 ml-lg-5">
+                                <div className="login_btn-contanier ml-0 ml-lg-5">
                                     <a href="">
                                         <img src="images/user.png" alt="" />
                                         <span>
@@ -77,38 +128,38 @@ export default function Dashboard() {
             </header>
         </div>
 
-            <section class="health_section layout_padding">
-                <div class="health_carousel-container">
-                    <h2 class="text-uppercase">
+            <section className="health_section layout_padding">
+                <div className="health_carousel-container">
+                    <h2 className="text-uppercase">
                         Medicine & Health
 
                     </h2>
-                    <div class="carousel-wrap layout_padding2">
-                        <div class="owl-carousel">
-                            <div class="item">
-                                <div class="box">
-                                    <div class="btn_container">
+                    <div className="carousel-wrap layout_padding2">
+                        <div className="owl-carousel">
+                            <div className="item">
+                                <div className="box">
+                                    <div className="btn_container">
                                         <a href="">
                                             Buy Now
                                         </a>
                                     </div>
-                                    <div class="img-box">
+                                    <div className="img-box">
                                         <img src="images/p-1.jpg" alt="" />
                                     </div>
-                                    <div class="detail-box">
-                                        <div class="star_container">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <div className="detail-box">
+                                        <div className="star_container">
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star-o" aria-hidden="true"></i>
 
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             <h6>
                                                 Health
                                             </h6>
-                                            <h6 class="price">
+                                            <h6 className="price">
                                                 <span>
                                                     $
                                                 </span>
@@ -117,29 +168,29 @@ export default function Dashboard() {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="box">
-                                    <div class="btn_container">
+                                <div className="box">
+                                    <div className="btn_container">
                                         <a href="">
                                             Buy Now
                                         </a>
                                     </div>
-                                    <div class="img-box">
+                                    <div className="img-box">
                                         <img src="images/p-5.jpg" alt="" />
                                     </div>
-                                    <div class="detail-box">
-                                        <div class="star_container">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <div className="detail-box">
+                                        <div className="star_container">
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star-o" aria-hidden="true"></i>
 
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             <h6>
                                                 Health
                                             </h6>
-                                            <h6 class="price">
+                                            <h6 className="price">
                                                 <span>
                                                     $
                                                 </span>
@@ -149,30 +200,30 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             </div>
-                            <div class="item">
-                                <div class="box">
-                                    <div class="btn_container">
+                            <div className="item">
+                                <div className="box">
+                                    <div className="btn_container">
                                         <a href="">
                                             Buy Now
                                         </a>
                                     </div>
-                                    <div class="img-box">
+                                    <div className="img-box">
                                         <img src="images/p-2.jpg" alt="" />
                                     </div>
-                                    <div class="detail-box">
-                                        <div class="star_container">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <div className="detail-box">
+                                        <div className="star_container">
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star-o" aria-hidden="true"></i>
 
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             <h6>
                                                 Health
                                             </h6>
-                                            <h6 class="price">
+                                            <h6 className="price">
                                                 <span>
                                                     $
                                                 </span>
@@ -181,29 +232,29 @@ export default function Dashboard() {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="box">
-                                    <div class="btn_container">
+                                <div className="box">
+                                    <div className="btn_container">
                                         <a href="">
                                             Buy Now
                                         </a>
                                     </div>
-                                    <div class="img-box">
+                                    <div className="img-box">
                                         <img src="images/p-5.jpg" alt="" />
                                     </div>
-                                    <div class="detail-box">
-                                        <div class="star_container">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <div className="detail-box">
+                                        <div className="star_container">
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star-o" aria-hidden="true"></i>
 
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             <h6>
                                                 Health
                                             </h6>
-                                            <h6 class="price">
+                                            <h6 className="price">
                                                 <span>
                                                     $
                                                 </span>
@@ -213,30 +264,30 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             </div>
-                            <div class="item">
-                                <div class="box">
-                                    <div class="btn_container">
+                            <div className="item">
+                                <div className="box">
+                                    <div className="btn_container">
                                         <a href="">
                                             Buy Now
                                         </a>
                                     </div>
-                                    <div class="img-box">
+                                    <div className="img-box">
                                         <img src="images/p-3.jpg" alt="" />
                                     </div>
-                                    <div class="detail-box">
-                                        <div class="star_container">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <div className="detail-box">
+                                        <div className="star_container">
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star-o" aria-hidden="true"></i>
 
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             <h6>
                                                 Health
                                             </h6>
-                                            <h6 class="price">
+                                            <h6 className="price">
                                                 <span>
                                                     $
                                                 </span>
@@ -245,29 +296,29 @@ export default function Dashboard() {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="box">
-                                    <div class="btn_container">
+                                <div className="box">
+                                    <div className="btn_container">
                                         <a href="">
                                             Buy Now
                                         </a>
                                     </div>
-                                    <div class="img-box">
+                                    <div className="img-box">
                                         <img src="images/p-5.jpg" alt="" />
                                     </div>
-                                    <div class="detail-box">
-                                        <div class="star_container">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <div className="detail-box">
+                                        <div className="star_container">
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star-o" aria-hidden="true"></i>
 
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             <h6>
                                                 Health
                                             </h6>
-                                            <h6 class="price">
+                                            <h6 className="price">
                                                 <span>
                                                     $
                                                 </span>
@@ -277,30 +328,30 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             </div>
-                            <div class="item">
-                                <div class="box">
-                                    <div class="btn_container">
+                            <div className="item">
+                                <div className="box">
+                                    <div className="btn_container">
                                         <a href="">
                                             Buy Now
                                         </a>
                                     </div>
-                                    <div class="img-box">
+                                    <div className="img-box">
                                         <img src="images/p-4.jpg" alt="" />
                                     </div>
-                                    <div class="detail-box">
-                                        <div class="star_container">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <div className="detail-box">
+                                        <div className="star_container">
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star-o" aria-hidden="true"></i>
 
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             <h6>
                                                 Health
                                             </h6>
-                                            <h6 class="price">
+                                            <h6 className="price">
                                                 <span>
                                                     $
                                                 </span>
@@ -309,29 +360,29 @@ export default function Dashboard() {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="box">
-                                    <div class="btn_container">
+                                <div className="box">
+                                    <div className="btn_container">
                                         <a href="">
                                             Buy Now
                                         </a>
                                     </div>
-                                    <div class="img-box">
+                                    <div className="img-box">
                                         <img src="images/p-5.jpg" alt="" />
                                     </div>
-                                    <div class="detail-box">
-                                        <div class="star_container">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <div className="detail-box">
+                                        <div className="star_container">
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star-o" aria-hidden="true"></i>
 
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             <h6>
                                                 Health
                                             </h6>
-                                            <h6 class="price">
+                                            <h6 className="price">
                                                 <span>
                                                     $
                                                 </span>
@@ -344,36 +395,36 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
-                <div class="health_carousel-container">
-                    <h2 class="text-uppercase">
+                <div className="health_carousel-container">
+                    <h2 className="text-uppercase">
                         Vitamins & Supplements
                     </h2>
-                    <div class="carousel-wrap layout_padding2">
-                        <div class="owl-carousel owl-2">
-                            <div class="item">
-                                <div class="box">
-                                    <div class="btn_container">
+                    <div className="carousel-wrap layout_padding2">
+                        <div className="owl-carousel owl-2">
+                            <div className="item">
+                                <div className="box">
+                                    <div className="btn_container">
                                         <a href="">
                                             Buy Now
                                         </a>
                                     </div>
-                                    <div class="img-box">
+                                    <div className="img-box">
                                         <img src="images/p-6.jpg" alt="" />
                                     </div>
-                                    <div class="detail-box">
-                                        <div class="star_container">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <div className="detail-box">
+                                        <div className="star_container">
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star-o" aria-hidden="true"></i>
 
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             <h6>
                                                 Medicine
                                             </h6>
-                                            <h6 class="price">
+                                            <h6 className="price">
                                                 <span>
                                                     $
                                                 </span>
@@ -383,30 +434,30 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             </div>
-                            <div class="item">
-                                <div class="box">
-                                    <div class="btn_container">
+                            <div className="item">
+                                <div className="box">
+                                    <div className="btn_container">
                                         <a href="">
                                             Buy Now
                                         </a>
                                     </div>
-                                    <div class="img-box">
+                                    <div className="img-box">
                                         <img src="images/p-6.jpg" alt="" />
                                     </div>
-                                    <div class="detail-box">
-                                        <div class="star_container">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <div className="detail-box">
+                                        <div className="star_container">
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star-o" aria-hidden="true"></i>
 
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             <h6>
                                                 Medicine
                                             </h6>
-                                            <h6 class="price">
+                                            <h6 className="price">
                                                 <span>
                                                     $
                                                 </span>
@@ -416,30 +467,30 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             </div>
-                            <div class="item">
-                                <div class="box">
-                                    <div class="btn_container">
+                            <div className="item">
+                                <div className="box">
+                                    <div className="btn_container">
                                         <a href="">
                                             Buy Now
                                         </a>
                                     </div>
-                                    <div class="img-box">
+                                    <div className="img-box">
                                         <img src="images/p-6.jpg" alt="" />
                                     </div>
-                                    <div class="detail-box">
-                                        <div class="star_container">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <div className="detail-box">
+                                        <div className="star_container">
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star-o" aria-hidden="true"></i>
 
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             <h6>
                                                 Medicine
                                             </h6>
-                                            <h6 class="price">
+                                            <h6 className="price">
                                                 <span>
                                                     $
                                                 </span>
@@ -449,30 +500,30 @@ export default function Dashboard() {
                                     </div>
                                 </div>
                             </div>
-                            <div class="item">
-                                <div class="box">
-                                    <div class="btn_container">
+                            <div className="item">
+                                <div className="box">
+                                    <div className="btn_container">
                                         <a href="">
                                             Buy Now
                                         </a>
                                     </div>
-                                    <div class="img-box">
+                                    <div className="img-box">
                                         <img src="images/p-6.jpg" alt="" />
                                     </div>
-                                    <div class="detail-box">
-                                        <div class="star_container">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star-o" aria-hidden="true"></i>
+                                    <div className="detail-box">
+                                        <div className="star_container">
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star" aria-hidden="true"></i>
+                                            <i className="fa fa-star-o" aria-hidden="true"></i>
 
                                         </div>
-                                        <div class="text">
+                                        <div className="text">
                                             <h6>
                                                 Medicine
                                             </h6>
-                                            <h6 class="price">
+                                            <h6 className="price">
                                                 <span>
                                                     $
                                                 </span>
@@ -485,7 +536,7 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center">
+                <div className="d-flex justify-content-center">
                     <a href="">
                         See more
                     </a>
