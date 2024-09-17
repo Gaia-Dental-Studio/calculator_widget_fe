@@ -1,9 +1,11 @@
 "use client";
 
 import {useEffect} from 'react';
+import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
 import 'owl.carousel/dist/assets/owl.carousel.css'; // Owl Carousel CSS
 import 'owl.carousel/dist/assets/owl.theme.default.css'; // Owl Carousel Theme CSS
+import Link from 'next/link';
 
 
 export default function Dashboard() {
@@ -90,27 +92,24 @@ export default function Dashboard() {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <div className="d-flex  flex-column flex-lg-row align-items-center w-100 justify-content-between">
                                 <ul className="navbar-nav  ">
-                                    <li className="nav-item active">
-                                        <a className="nav-link" href="index.html">Home <span className="sr-only">(current)</span></a>
+                                    <li className="nav-item">
+                                        <Link href="/dashboard" className="nav-link">
+                                            Dashboard
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" href="about.html"> About </a>
+                                        <Link href="/calculator" className="nav-link">
+                                            Calculator
+                                        </Link>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" href="medicine.html"> Medicine </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="buy.html"> Online Buy </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="news.html"> News </a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="contact.html">Contact us</a>
+                                        <Link href="/cart" className="nav-link">
+                                            Cart
+                                        </Link>
                                     </li>
                                 </ul>
                                 <form className="form-inline ">
-                                    <input type="search" placeholder="Search" />
+                                    <input className='col-lg-3 ml-4' type="search" placeholder="Search" />
                                     <button className="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
                                 </form>
                                 <div className="login_btn-contanier ml-0 ml-lg-5">
