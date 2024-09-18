@@ -45,16 +45,21 @@ export default function Dashboard() {
         event.preventDefault();
 
         var dataPost = {
-            'main_data': carts,
-            'modified_data': totalCarts
+            "fields": {
+                "Agreement ID": "Test 1",
+                "Interest Rate": 0.12,
+                "Loan Term (Months)" : 24
+            }
         };
+
         console.log(dataPost);
         //return;
         try {
-            const response = await fetch('http://127.0.0.1:5000/api-post-airtable', {
+            const response = await fetch('https://api.airtable.com/v0/appLCog6dSk4upByJ/tbl15gz7VpqQKpeg7', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: 'Bearer patNnnjdWrABCfNXR.a6a4729e6bb336102cfb3117233682c474a4c94180431724139a4baa2370eb29'
                 },
                 body: JSON.stringify(dataPost),
             });
@@ -270,6 +275,7 @@ export default function Dashboard() {
                                         <th>Interest Payment</th>
                                         <th>Principal Payment</th>
                                         <th>Remaining Principal</th>
+                                        <th>Monthly Repayment ($)</th>
                                     </tr>
                                 </thead>
                                 <tbody>

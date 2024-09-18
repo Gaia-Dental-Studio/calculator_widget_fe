@@ -48,22 +48,23 @@ export default function Dashboard() {
             setChartData({
                 series: [
                     {
-                        name: 'Added Value Payment',
-                        data: addedValuePayment,
+                        name: 'Interest Payment',
+                        data: interestPayments,
                     },
                     {
                         name: 'Principal Payment',
                         data: principalPayments,
                     },
                     {
-                        name: 'Interest Payment',
-                        data: interestPayments,
+                        name: 'Added Value Payment',
+                        data: addedValuePayment,
                     },
                 ],
                 options: {
                     chart: {
                         height: 350,
-                        type: 'line',
+                        type: 'area',
+                        stacked: true,
                     },
                     xaxis: {
                         categories: months,
@@ -104,22 +105,23 @@ export default function Dashboard() {
     const [chartData, setChartData] = useState({
         series: [
             {
-                name: 'Added Value Payment',
-                data: [], //Principle payment
+                name: 'Interest Payment',
+                data: [], //Interest payment
             },
             {
                 name: 'Principal Payment',
                 data: [], //Principle payment
             },
             {
-                name: 'Interest Payment',
-                data: [], //Interest payment
+                name: 'Added Value Payment',
+                data: [], //Principle payment
             },
         ],
         options: {
             chart: {
-                height: 350,
-                type: 'area',
+                        height: 350,
+                        type: 'area',
+                        stacked: true,
             },
             dataLabels: {
                 enabled: false,
