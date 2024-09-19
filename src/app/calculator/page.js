@@ -7,15 +7,31 @@ import 'owl.carousel/dist/assets/owl.carousel.css'; // Owl Carousel CSS
 import 'owl.carousel/dist/assets/owl.theme.default.css'; // Owl Carousel Theme CSS
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import {useSearchParams} from 'next/navigation'
 
 const Chart = dynamic(() => import('react-apexcharts'), {ssr: false});
 
 export default function Dashboard() {
     const [result, setResult] = useState(null);
     const [resultCollection, setResultCollection] = useState(null);
+    const searchParams = useSearchParams();
+    const [price, setPrice] = useState(searchParams.get('price')); // Initialize state for input
+    const [loan_term, setLoanTerm] = useState(3); // Initialize state for input
+
+    const product_name = searchParams.get('product_name');
+    //setPrice(searchParams.get('price')) ;
+    const free_warranty = searchParams.get('free_warranty');
+    //const price = searchParams.get('price');
+    const handleInputChange = (event) => {
+        setPrice(event.target.value); // Update state with new input value
+    };
+
+    const handleInputChangeLoanTerm = (event) => {
+        setLoanTerm(event.target.value); // Update state with new input value
+    };
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        if (event) event.preventDefault(); // Prevent default if called from submit event
 
         var formArray = $('#form_data').serializeArray();
         var formData = {};
@@ -26,7 +42,7 @@ export default function Dashboard() {
         });
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/set_user_parameters_scheme_1', {
+            const response = await fetch('http://194.233.67.224:5000/set_user_parameters_scheme_1', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -119,9 +135,9 @@ export default function Dashboard() {
         ],
         options: {
             chart: {
-                        height: 350,
-                        type: 'area',
-                        stacked: true,
+                height: 350,
+                type: 'area',
+                stacked: true,
             },
             dataLabels: {
                 enabled: false,
@@ -196,9 +212,19 @@ export default function Dashboard() {
         }
     };
 
+    const formatString = (str) => {
+         return str
+             .split(/-|_/) // Split the string by dash (-) or underscore (_)
+             .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter
+             .join(' '); // Join words with a space
+    };
+
     useEffect(() => {
         $(document).ready(function () {
-
+            // Call handleSubmit after a delay of 1 second (1000 milliseconds)
+            setTimeout(function () {
+                handleSubmit(); // Call handleSubmit without event argument
+            }, 1000);
             //$('[data-bs-toggle="tooltip"]').tooltip();
             // Inisialisasi carousel pertama
             $(".owl-carousel").owlCarousel({
@@ -334,8 +360,12 @@ export default function Dashboard() {
                             <div className="form_contaier">
                                 <form onSubmit={handleSubmit} id='form_data' >
                                     <div className="form-group">
+                                        <label htmlFor="exampleInputEmail1">Name Item </label>
+                                        <input name='FreeWarranty' type="text" className="form-control" id="exampleInputEmail1" value={formatString(product_name)} readOnly />
+                                    </div>
+                                    <div className="form-group">
                                         <label htmlFor="exampleInputEmail1">Free Warranty </label>
-                                        <input name='FreeWarranty' type="number" className="form-control" id="exampleInputEmail1" value={0} readOnly />
+                                        <input name='FreeWarranty' type="text" className="form-control" id="exampleInputEmail1" value={free_warranty} readOnly />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="exampleInputNumber1">Choose Loan Scheme</label>
@@ -346,11 +376,11 @@ export default function Dashboard() {
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="exampleInputEmail1">Loan Term (Years)</label>
-                                        <input name='LoanTermVar' type="number" className="form-control" id="exampleInputEmail1" />
+                                        <input name='LoanTermVar' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeLoanTerm} value={loan_term} />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="exampleInputName1">Equipment Cost ($)</label>
-                                        <input name='EquipmentPriceVar' type="text" className="form-control" id="exampleInputName1" />
+                                        <input name='EquipmentPriceVar' type="text" className="form-control" id="exampleInputName1" onChange={handleInputChange} value={price} />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="exampleInputNumber1">Maintenance Opt Out</label>
@@ -362,7 +392,7 @@ export default function Dashboard() {
 
                                     <div className="form-group">
                                         <label htmlFor="exampleInputEmail1">Terminal Rate (%) </label>
-                                        <input name='terminal_rate' type="number" className="form-control" id="exampleInputEmail1" />
+                                        <input name='terminal_rate' type="number" className="form-control" id="exampleInputEmail1" value={10} />
                                     </div>
 
                                     <div className="form-group">
@@ -375,7 +405,7 @@ export default function Dashboard() {
 
                                     <div className="form-group">
                                         <label htmlFor="exampleInputEmail1">Extra Warranty (Years) </label>
-                                        <input name='ExtraWarranty' type="number" className="form-control" id="exampleInputEmail1" />
+                                        <input name='ExtraWarranty' type="number" className="form-control" id="exampleInputEmail1" value={price < 75000 ? '2' : '1'} />
                                     </div>
 
                                     <div className="form-group">
