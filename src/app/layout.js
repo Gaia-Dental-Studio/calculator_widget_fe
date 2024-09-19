@@ -1,10 +1,12 @@
-import {Inter} from "next/font/google";
+//import {Inter} from "next/font/google";
 //import "./globals.css";
 import "../styles/css/bootstrap.css";
 import "../styles/css/responsive.css";
 import "../styles/css/style.css";
+import "../styles/css/header.css";
+import "../styles/css/footer.css";
 
-const inter = Inter({subsets: ["latin"]});
+//const inter = Inter({subsets: ["latin"]});
 
 export const metadata = {
     title: "Calculator Widget",
@@ -20,7 +22,8 @@ export default function RootLayout({children}) {
                 <script src="/js/jquery-3.4.1.min.js"></script>
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js"></script>
             </head>
-            <body className={inter.className}>{children}</body>
+
+            <body>{children}</body>
         </html>
     );
 }

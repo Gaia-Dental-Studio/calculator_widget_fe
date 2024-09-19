@@ -1,0 +1,129 @@
+.gear .footer {
+    color: #000;
+    background-color: #fff;
+    padding: 50px 30px 30px;
+}
+
+.gear .flex-row {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.gear .w-row::after {
+    clear: both;
+
+}
+
+.gear .w-row::before,
+.w-row::after {
+    content: " ";
+
+    grid-area: 1 / 1 / 2 / 2;
+
+    display: table;
+}
+
+.gear .w-col-6 {
+    width: 50%;
+}
+
+.gear .w-col {
+    float: left;
+    width: 100%;
+    min-height: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: relative;
+}
+
+.gear .image-3 {
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+.gear img {
+    vertical-align: middle;
+    max-width: 100%;
+    display: inline-block;
+}
+
+.gear .nav-link.in-footer {
+    color: black;
+    text-decoration: none;
+}
+
+.gear .nav-link {
+    color: #212127a3;
+    padding-left: 18px;
+    padding-right: 18px;
+    font-family: Poppins, sans-serif;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.gear .footer-left-part {
+    justify-content: flex-end;
+    display: flex;
+}
+
+.gear .top-icon-flex {
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 20px;
+    display: flex;
+}
+
+.gear .top-text {
+    margin-bottom: 0;
+    margin-left: 10px;
+    padding-right: 14px;
+}
+
+.gear p {
+    color: #919197;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.gear .top-icon-flex.no-space {
+    margin-left: 0;
+}
+
+.gear .top-icon-flex {
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 20px;
+    display: flex;
+}
+
+.gear .top-margin {
+    margin-top: 40px;
+    display: block;
+}
+
+.gear .flex-row {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.gear .copyright {
+    color: #b7b7bb;
+    margin-bottom: 0;
+    display: inline-block;
+}
+
+.gear .link-2 {
+    color: black;
+    text-decoration: none;
+}
+
+.gear .social-icon {
+    opacity: 1;
+    color: var(--black);
+    margin-right: 12px;
+}

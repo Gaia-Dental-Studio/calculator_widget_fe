@@ -1,5 +1,6 @@
 "use client";
-
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import {useEffect} from 'react';
 import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
@@ -40,6 +41,9 @@ export default function Dashboard() {
             var value = isNaN(item.value) ? item.value : parseFloat(item.value);
             formData[item.name] = value;
         });
+
+        formData['FreeWarranty'] = price < 75000 ? 1 : 2;
+        formData['EquipmentPriceVar'] = parseInt(price);
 
         try {
             const response = await fetch('http://194.233.67.224:5000/set_user_parameters_scheme_1', {
@@ -212,11 +216,15 @@ export default function Dashboard() {
         }
     };
 
-    const formatString = (str) => {
-         return str
-             .split(/-|_/) // Split the string by dash (-) or underscore (_)
-             .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter
-             .join(' '); // Join words with a space
+    const formatString = (str = "") => {
+        if (str === null) {
+            return;
+        }
+
+        return str
+            .split(/-|_/) // Split the string by dash (-) or underscore (_)
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter
+            .join(' '); // Join words with a space
     };
 
     useEffect(() => {
@@ -271,87 +279,22 @@ export default function Dashboard() {
     }, []);
 
     return (
-        <main>        <div className="hero_area_">
-            <header className="header_section">
-                <div className="container">
-                    <div className="top_contact-container">
-                        <div className="tel_container">
-                            <a href="">
-                                <img src="/images/telephone-symbol-button.png" alt="" /> +01 1234567890
-                            </a>
-                        </div>
-                        <div className="social-container">
-                            <a href="">
-                                <img src="/images/fb.png" alt="" className="s-1" />
-                            </a>
-                            <a href="">
-                                <img src="/images/twitter.png" alt="" className="s-2" />
-                            </a>
-                            <a href="">
-                                <img src="/images/instagram.png" alt="" className="s-3" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div className="container-fluid">
-                    <nav className="navbar navbar-expand-lg custom_nav-container pt-3">
-                        <a className="navbar-brand" href="index.html">
-                            <img src="images/logo.png" alt="" />
-                            <span>
-                                Medion
-                            </span>
-                        </a>
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                            <div className="d-flex  flex-column flex-lg-row align-items-center w-100 justify-content-between">
-                                <ul className="navbar-nav  ">
-                                    <li className="nav-item">
-                                        <Link href="/dashboard" className="nav-link">
-                                            Dashboard
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link href="/calculator" className="nav-link">
-                                            Calculator
-                                        </Link>
-                                    </li>
-                                    <li className="nav-item" >
-                                        <Link href="/cart" className="nav-link">
-                                            Cart
-                                        </Link>
-                                    </li>
-                                </ul>
-                                <form className="form-inline ">
-                                    <input className='col-lg-3 ml-4' type="search" placeholder="Search" />
-                                    <button className="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
-                                </form>
-                                <div className="login_btn-contanier ml-0 ml-lg-5">
-                                    <a href="">
-                                        <img src="images/user.png" alt="" />
-                                        <span>
-                                            Login
-                                        </span>
-                                    </a>
-                                </div>
-
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-            </header>
-        </div>
+        <main>
+            <Header />
             <section className="contact_section layout_padding">
                 <div className="container">
+                    <p style={{color: 'grey', fontWeight: '500'}} >Dental Imagging</p>
                     <div className="row">
                         <div className="custom_heading-container ">
                             <h2>
-                                Pricing Calculator (Single Product)
+                                {formatString(product_name) || "-"}
                             </h2>
                         </div>
+                        <div className='row col-lg-6' style={{color: 'grey'}} >
+                            <div className='col-lg-6'> <h4> Start from </h4> </div>
+                            <div className='col-lg-6'> <h4>{price}</h4> </div>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
                     </div>
                 </div>
                 <div className="container layout_padding2">
@@ -359,14 +302,6 @@ export default function Dashboard() {
                         <div className="col-md-5">
                             <div className="form_contaier">
                                 <form onSubmit={handleSubmit} id='form_data' >
-                                    <div className="form-group">
-                                        <label htmlFor="exampleInputEmail1">Name Item </label>
-                                        <input name='FreeWarranty' type="text" className="form-control" id="exampleInputEmail1" value={formatString(product_name)} readOnly />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="exampleInputEmail1">Free Warranty </label>
-                                        <input name='FreeWarranty' type="text" className="form-control" id="exampleInputEmail1" value={free_warranty} readOnly />
-                                    </div>
                                     <div className="form-group">
                                         <label htmlFor="exampleInputNumber1">Choose Loan Scheme</label>
                                         <select name='scheme' id="inputState" className="form-control">
@@ -379,8 +314,18 @@ export default function Dashboard() {
                                         <input name='LoanTermVar' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeLoanTerm} value={loan_term} />
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="exampleInputName1">Equipment Cost ($)</label>
-                                        <input name='EquipmentPriceVar' type="text" className="form-control" id="exampleInputName1" onChange={handleInputChange} value={price} />
+                                        <label htmlFor="exampleInputEmail1">Business Continuity Opt Out</label>
+                                        <select name='BusinessCon' id="inputState" className="form-control">
+                                            <option>Yes</option>
+                                            <option>No</option>
+                                        </select>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="exampleInputNumber1">Insurance Opt Out</label>
+                                        <select name='insurance_opt_in' id="inputState" className="form-control">
+                                            <option value={"Yes"}>Yes</option>
+                                            <option value={"No"} >No</option>
+                                        </select>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="exampleInputNumber1">Maintenance Opt Out</label>
@@ -394,30 +339,13 @@ export default function Dashboard() {
                                         <label htmlFor="exampleInputEmail1">Terminal Rate (%) </label>
                                         <input name='terminal_rate' type="number" className="form-control" id="exampleInputEmail1" value={10} />
                                     </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="exampleInputNumber1">Insurance Opt Out</label>
-                                        <select name='insurance_opt_in' id="inputState" className="form-control">
-                                            <option value={"Yes"}>Yes</option>
-                                            <option value={"No"} >No</option>
-                                        </select>
-                                    </div>
-
                                     <div className="form-group">
                                         <label htmlFor="exampleInputEmail1">Extra Warranty (Years) </label>
                                         <input name='ExtraWarranty' type="number" className="form-control" id="exampleInputEmail1" value={price < 75000 ? '2' : '1'} />
                                     </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="exampleInputEmail1">Business Continuity Opt Out</label>
-                                        <select name='BusinessCon' id="inputState" className="form-control">
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
-                                    </div>
                                     <div className='d-flex justify-content-between' >
-                                        <button type="submit" className="">Show</button>
-                                        <button onClick={addNewCart} style={{backgroundColor: '#17a2b8', borderColor: '#17a2b8'}} type="button" className="btn btn-success">Add To Cart</button>
+                                        <button style={{backgroundColor: "#2e77d0"}} type="submit" className="">Calculate</button>
+                                        <button onClick={addNewCart} style={{backgroundColor: '#17a2b8', borderColor: '#2e77d0'}} type="button" className="btn btn-success">Add To Cart</button>
                                     </div>
                                 </form>
                             </div>
@@ -565,6 +493,7 @@ export default function Dashboard() {
             </section>
             <div className='row'>
             </div>
+            <Footer />
         </main>
     );
 }
