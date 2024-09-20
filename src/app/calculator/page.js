@@ -18,6 +18,7 @@ export default function Dashboard() {
     const searchParams = useSearchParams();
     const [price, setPrice] = useState(searchParams.get('price')); // Initialize state for input
     const [loan_term, setLoanTerm] = useState(3); // Initialize state for input
+    const [months_payment, setMonthlyPayment] = useState(0); // Initialize state for input
 
     const product_name = searchParams.get('product_name');
     //setPrice(searchParams.get('price')) ;
@@ -65,6 +66,7 @@ export default function Dashboard() {
             const totalprincipalPayments = principalPayments.reduce((total, current) => parseFloat(total) + parseFloat(current), 0);
             const totalinterestPayments = interestPayments.reduce((total, current) => parseFloat(total) + parseFloat(current), 0);
             console.log('Success:', result);
+            setMonthlyPayment(result.results.monthlyPayment);
             setChartData({
                 series: [
                     {
@@ -233,6 +235,7 @@ export default function Dashboard() {
             setTimeout(function () {
                 handleSubmit(); // Call handleSubmit without event argument
             }, 1000);
+
             //$('[data-bs-toggle="tooltip"]').tooltip();
             // Inisialisasi carousel pertama
             $(".owl-carousel").owlCarousel({
@@ -292,9 +295,9 @@ export default function Dashboard() {
                         </div>
                         <div className='row col-lg-6' style={{color: 'grey'}} >
                             <div className='col-lg-6'> <h4> Start from </h4> </div>
-                            <div className='col-lg-6'> <h4>{price}</h4> </div>
+                            <div className='col-lg-6'> <h4 id="monthlyPaymentId" >$ {months_payment.toFixed(2) || "-"} AUD/months</h4> </div>
                         </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                        <p style={{color:"grey"}} >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
                     </div>
                 </div>
                 <div className="container layout_padding2">
@@ -353,7 +356,6 @@ export default function Dashboard() {
                         <div className="col-md-7">
                             {result && (
                                 <div>
-
                                     <div className='col-lg-12 row' >
                                         <div className='col-lg-4'>
                                             <div className='form-group' data-bs-toggle="tooltip" title="Test Tooltip" >

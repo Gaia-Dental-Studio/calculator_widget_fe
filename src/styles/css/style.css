@@ -846,5 +846,9 @@ a:focus {
     color: #fbfcfd;
 }
 
+#form_data label {
+    font-weight: bold;
+}
+
 /* end footer section*/
 /*# sourceMappingURL=style.css.map */
