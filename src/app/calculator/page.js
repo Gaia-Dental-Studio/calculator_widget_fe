@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
 import 'owl.carousel/dist/assets/owl.carousel.css'; // Owl Carousel CSS
 import 'owl.carousel/dist/assets/owl.theme.default.css'; // Owl Carousel Theme CSS
 import dynamic from 'next/dynamic';
-import Link from 'next/link';
 import {useSearchParams} from 'next/navigation'
 
 const Chart = dynamic(() => import('react-apexcharts'), {ssr: false});
@@ -21,6 +20,11 @@ export default function Dashboard() {
     const [months_payment, setMonthlyPayment] = useState(0); // Initialize state for input
     const [terminal_rate, setTerminalRate] = useState(10); // Initialize state for input
     const [extra_warranty, setExtraWarranty] = useState(2); // Initialize state for input
+    const [checkboxes, setCheckboxes] = useState({
+        Maintenance: true,
+        insurance_opt_in: true,
+        BusinessCon: true
+    });
 
     const product_name = searchParams.get('product_name');
     //setPrice(searchParams.get('price')) ;
@@ -30,14 +34,25 @@ export default function Dashboard() {
         setPrice(event.target.value); // Update state with new input value
     };
 
+    // Handle the change for multiple checkboxes
+    const handleCheckboxChange = (event) => {
+        const {name, checked} = event.target;
+
+        // Update the state for the specific checkbox
+        setCheckboxes({
+            ...checkboxes, // Keep the current state of other checkboxes
+            [name]: checked // Update the state of the changed checkbox
+        });
+    };
+
     const handleInputChangeLoanTerm = (event) => {
         setLoanTerm(event.target.value); // Update state with new input value
     };
 
-        const handleInputChangeExtraWarranty = (event) => {
+    const handleInputChangeExtraWarranty = (event) => {
         setExtraWarranty(event.target.value); // Update state with new input value
     };
-        const handleInputChangeTerminalRate = (event) => {
+    const handleInputChangeTerminalRate = (event) => {
         setTerminalRate(event.target.value); // Update state with new input value
     };
 
@@ -50,6 +65,13 @@ export default function Dashboard() {
         formArray.forEach(function (item) {
             var value = isNaN(item.value) ? item.value : parseFloat(item.value);
             formData[item.name] = value;
+        });
+
+        // Handle unchecked checkboxes
+        $('#form_data input[type="checkbox"]').each(function () {
+            if (!this.checked) {
+                formData[this.name] = "No";
+            }
         });
 
         formData['FreeWarranty'] = price < 75000 ? 1 : 2;
@@ -295,17 +317,13 @@ export default function Dashboard() {
             <section className="contact_section layout_padding">
                 <div className="container">
                     <p style={{color: 'grey', fontWeight: '500'}} >Dental Imagging</p>
-                    <div className="row">
+                    <div className="">
                         <div className="custom_heading-container ">
                             <h2>
                                 {formatString(product_name) || "-"}
                             </h2>
                         </div>
-                        <div className='row col-lg-6' style={{color: 'grey'}} >
-                            <div className='col-lg-6'> <h4> Start from </h4> </div>
-                            <div className='col-lg-6'> <h4 id="monthlyPaymentId" >$ {months_payment.toFixed(2) || "-"} AUD/months</h4> </div>
-                        </div>
-                        <p style={{color: "grey"}} >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+
                     </div>
                 </div>
                 <div className="container layout_padding2">
@@ -324,28 +342,20 @@ export default function Dashboard() {
                                         <label htmlFor="exampleInputEmail1">Loan Term (Years)</label>
                                         <input name='LoanTermVar' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeLoanTerm} value={loan_term} />
                                     </div>
-                                    <div className="form-group">
-                                        <label htmlFor="exampleInputEmail1">Business Continuity</label>
-                                        <select name='BusinessCon' id="inputState" className="form-control">
-                                            <option>Yes</option>
-                                            <option>No</option>
-                                        </select>
+                                    <div className='d-flex'>
+                                        <div className='col-lg-4 text-center' >
+                                            <input className='d-block' type="checkbox" name="Maintenance" id="maintenance" style={{margin: "0 auto"}} value={"Yes"} checked={checkboxes.Maintenance} onChange={handleCheckboxChange} />
+                                            <label for="">Maintenance</label>
+                                        </div>
+                                        <div className='col-lg-4 text-center' >
+                                            <input className='d-block' type="checkbox" name='insurance_opt_in' id="insurance_opt_in" style={{margin: "0 auto"}} value={"Yes"} checked={checkboxes.insurance_opt_in} onChange={handleCheckboxChange} />
+                                            <label for="">Insurance</label>
+                                        </div>
+                                        <div className='col-lg-4 text-center' >
+                                            <input name='BusinessCon' id="BusinessCon" className='d-block' type="checkbox" style={{margin: "0 auto"}} value={"Yes"} checked={checkboxes.BusinessCon} onChange={handleCheckboxChange} />
+                                            <label for="">Business Continuity</label>
+                                        </div>
                                     </div>
-                                    <div className="form-group">
-                                        <label htmlFor="exampleInputNumber1">Insurance</label>
-                                        <select name='insurance_opt_in' id="inputState" className="form-control">
-                                            <option value={"Yes"}>Yes</option>
-                                            <option value={"No"} >No</option>
-                                        </select>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="exampleInputNumber1">Maintenance</label>
-                                        <select name='Maintenance' id="inputState" className="form-control">
-                                            <option value={"Yes"} >Yes</option>
-                                            <option value={"No"} >No</option>
-                                        </select>
-                                    </div>
-
                                     <div className="form-group">
                                         <label htmlFor="exampleInputEmail1">Terminal Rate (%) </label>
                                         <input name='terminal_rate' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeTerminalRate} value={terminal_rate} />
@@ -362,6 +372,19 @@ export default function Dashboard() {
                             </div>
                         </div>
                         <div className="col-md-7">
+                            <div className='row col-lg-12 mt-2' style={{color: 'grey'}} >
+                                <div className='col-lg-6'> <h4> Start from </h4> </div>
+                                <div className='col-lg-6'> <h4 id="monthlyPaymentId" >$ {months_payment.toFixed(2) || "-"} AUD/months</h4> </div>
+                            </div>
+                            <div className='row col-lg-12 mb-2' style={{color: 'grey'}} >
+                                <div className='col-lg-6'> <h4> Loan term </h4> </div>
+                                <div className='col-lg-6'> <h4>{(loan_term || 0) * 12} months</h4> </div>
+                            </div>
+                            <div className='col-lg-12'>
+                                <p style={{color: "grey"}} >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                            </div>
+                        </div>
+                        <div className="col-md-7" style={{display: 'none'}} >
                             {result && (
                                 <div>
                                     <div className='col-lg-12 row' >

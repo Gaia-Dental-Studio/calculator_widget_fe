@@ -38,7 +38,7 @@ body {
 }
 
 .custom_heading-container h2 {
-    text-transform: uppercase;
+    text-transform: none;
     position: relative;
 }
 
