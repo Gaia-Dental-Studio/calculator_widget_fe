@@ -19,6 +19,8 @@ export default function Dashboard() {
     const [price, setPrice] = useState(searchParams.get('price')); // Initialize state for input
     const [loan_term, setLoanTerm] = useState(3); // Initialize state for input
     const [months_payment, setMonthlyPayment] = useState(0); // Initialize state for input
+    const [terminal_rate, setTerminalRate] = useState(10); // Initialize state for input
+    const [extra_warranty, setExtraWarranty] = useState(2); // Initialize state for input
 
     const product_name = searchParams.get('product_name');
     //setPrice(searchParams.get('price')) ;
@@ -30,6 +32,13 @@ export default function Dashboard() {
 
     const handleInputChangeLoanTerm = (event) => {
         setLoanTerm(event.target.value); // Update state with new input value
+    };
+
+        const handleInputChangeExtraWarranty = (event) => {
+        setExtraWarranty(event.target.value); // Update state with new input value
+    };
+        const handleInputChangeTerminalRate = (event) => {
+        setTerminalRate(event.target.value); // Update state with new input value
     };
 
     const handleSubmit = async (event) => {
@@ -45,7 +54,6 @@ export default function Dashboard() {
 
         formData['FreeWarranty'] = price < 75000 ? 1 : 2;
         formData['EquipmentPriceVar'] = parseInt(price);
-
         try {
             const response = await fetch('http://194.233.67.224:5000/set_user_parameters_scheme_1', {
                 method: 'POST',
@@ -297,7 +305,7 @@ export default function Dashboard() {
                             <div className='col-lg-6'> <h4> Start from </h4> </div>
                             <div className='col-lg-6'> <h4 id="monthlyPaymentId" >$ {months_payment.toFixed(2) || "-"} AUD/months</h4> </div>
                         </div>
-                        <p style={{color:"grey"}} >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                        <p style={{color: "grey"}} >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
                     </div>
                 </div>
                 <div className="container layout_padding2">
@@ -317,21 +325,21 @@ export default function Dashboard() {
                                         <input name='LoanTermVar' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeLoanTerm} value={loan_term} />
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="exampleInputEmail1">Business Continuity Opt Out</label>
+                                        <label htmlFor="exampleInputEmail1">Business Continuity</label>
                                         <select name='BusinessCon' id="inputState" className="form-control">
                                             <option>Yes</option>
                                             <option>No</option>
                                         </select>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="exampleInputNumber1">Insurance Opt Out</label>
+                                        <label htmlFor="exampleInputNumber1">Insurance</label>
                                         <select name='insurance_opt_in' id="inputState" className="form-control">
                                             <option value={"Yes"}>Yes</option>
                                             <option value={"No"} >No</option>
                                         </select>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="exampleInputNumber1">Maintenance Opt Out</label>
+                                        <label htmlFor="exampleInputNumber1">Maintenance</label>
                                         <select name='Maintenance' id="inputState" className="form-control">
                                             <option value={"Yes"} >Yes</option>
                                             <option value={"No"} >No</option>
@@ -340,11 +348,11 @@ export default function Dashboard() {
 
                                     <div className="form-group">
                                         <label htmlFor="exampleInputEmail1">Terminal Rate (%) </label>
-                                        <input name='terminal_rate' type="number" className="form-control" id="exampleInputEmail1" value={10} />
+                                        <input name='terminal_rate' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeTerminalRate} value={terminal_rate} />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="exampleInputEmail1">Extra Warranty (Years) </label>
-                                        <input name='ExtraWarranty' type="number" className="form-control" id="exampleInputEmail1" value={price < 75000 ? '2' : '1'} />
+                                        <input name='ExtraWarranty' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeExtraWarranty} value={extra_warranty} />
                                     </div>
                                     <div className='d-flex justify-content-between' >
                                         <button style={{backgroundColor: "#2e77d0"}} type="submit" className="">Calculate</button>
