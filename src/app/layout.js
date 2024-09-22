@@ -21,6 +21,7 @@ export default function RootLayout({children}) {
                 <meta name="referrer" content="no-referrer-when-downgrade" />
                 <script src="/js/jquery-3.4.1.min.js"></script>
                 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js"></script>
+                <script src="https://use.fontawesome.com/c560c025cf.js"></script>
             </head>
 
             <body>{children}</body>

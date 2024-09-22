@@ -240,6 +240,7 @@ export default function Dashboard() {
 
     const addNewCart = () => {
         try {
+            result.results.product_name = formatString(product_name) ;
             const cartId = initializeCartId(); // Ambil cartId yang ada atau inisialisasi
             localStorage.setItem(`cart${cartId}Results`, JSON.stringify(result.results));
             localStorage.setItem(`cart${cartId}Results2`, JSON.stringify(result.results2));

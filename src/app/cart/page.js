@@ -1,14 +1,13 @@
 "use client";
 
+import "../../styles/css/cart.css";
 import Header from '../../components/Header';
-import Footer from '../../components/Header';
+import Footer from '../../components/Footer';
 import {useEffect} from 'react';
 import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
 import 'owl.carousel/dist/assets/owl.carousel.css'; // Owl Carousel CSS
 import 'owl.carousel/dist/assets/owl.theme.default.css'; // Owl Carousel Theme CSS
-import Link from 'next/link';
-
 
 export default function Dashboard() {
     const [carts, setCarts] = useState([]);
@@ -50,7 +49,7 @@ export default function Dashboard() {
             "fields": {
                 "Agreement ID": "Test 1",
                 "Interest Rate": 0.12,
-                "Loan Term (Months)" : 24
+                "Loan Term (Months)": 24
             }
         };
 
@@ -73,6 +72,14 @@ export default function Dashboard() {
             console.error('Error:', error);
         }
     };
+
+    const formatNumber = (number) => {
+        // Round the number to the nearest integer
+        const roundedNumber = Math.round(number || 0);
+
+        // Format the number with commas for thousands separator
+        return roundedNumber.toLocaleString('en-US');
+    }
 
 
     useEffect(() => {
@@ -109,6 +116,8 @@ export default function Dashboard() {
         const resultArray = Object.values(totalsByMonth);
         setTotalCarts(resultArray);
         console.log(resultArray);
+        console.log(allCarts);
+
 
         $(document).ready(function () {
             $(".owl-carousel").owlCarousel({
@@ -153,82 +162,86 @@ export default function Dashboard() {
     }, []);
 
     return (
-        <main>        
+        <main>
             <Header />
-            <section className="health_section layout_padding">
-                <div className="health_carousel-container">
-                    <h2 className="text-uppercase">
-                        Cart List
-                    </h2>
-                    {carts.map((cart) => (
-                        <div key={cart.cartId}>
-                            <h2>Cart {cart.cartId} Data</h2>
+            <div class="container">
+                <div class="card shopping-cart">
+                    <div class="card-header bg-dark text-light">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        Shipping cart
+                        <a href="" class="btn btn-sm pull-right"></a>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="card-body">
+                        {carts.map((cart) => (
                             <div>
-                                <p>Annual Rate: {cart.results.annual_rate}</p>
-                                <p>Principal: {cart.results.principal}</p>
-                                <p>Maintenance Fee: {cart.results.maintenance_fee}</p>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <h4 class="product-name"><strong>{cart.results.product_name}</strong></h4>
+                                        <h4>
+                                            <small>Product description</small>
+                                        </h4>
+                                    </div>
+                                    <div class=" text-sm-center col-lg-8 text-md-right row">
+                                        <div class="col-lg-5 text-md-right" >
+                                            <h6>Monthly Payment : <strong>${formatNumber(cart.results.monthlyPayment)}</strong></h6>
+                                        </div>
+                                        <div class="col-lg-5 text-md-right" >
+                                            <h6>Loan Term : <strong>{cart.results.loan_term * 12} Months</strong></h6>
+                                        </div>
+                                        <div class="col-lg-2 text-md-right" >
+                                            <button type="button" class="btn btn-outline-danger btn-xs">
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
                             </div>
-
-                            <h3>Monthly Payments</h3>
+                        ))}
+                        <div class="">
                             <table className="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Month</th>
-                                        <th>Added Value Payment</th>
-                                        <th>Interest Payment</th>
-                                        <th>Principal Payment</th>
-                                        <th>Remaining Principal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {cart.results2.map((item, index) => (
-                                        <tr key={index}>
-                                            <td>{item.Month}</td>
-                                            <td>{item["Added Value Payment"]}</td>
-                                            <td>{item["Interest Payment"]}</td>
-                                            <td>{item["Principal Payment"]}</td>
-                                            <td>{item["Remaining Principal"]}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    ))}
-
-                    <div>
-                        <h2>Total All Item</h2>
-                        <div>
-                            <table className="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Month</th>
-                                        <th>Added Value Payment</th>
-                                        <th>Interest Payment</th>
-                                        <th>Principal Payment</th>
-                                        <th>Remaining Principal</th>
-                                        <th>Monthly Repayment ($)</th>
+                                        <th className="text-center" >Month</th>
+                                        <th className="text-center" >Monthly Repayment ($)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {totalCarts.map((result, index) => (
                                         <tr key={index}>
-                                            <td>{result.Month}</td>
-                                            <td>{result["Added Value Payment"]}</td>
-                                            <td>{result["Interest Payment"]}</td>
-                                            <td>{result["Principal Payment"]}</td>
-                                            <td>{result["Remaining Principal"]}</td>
-                                            <td>{result["Total Payment"]}</td>
+                                            <td className="text-center" >{result.Month}</td>
+                                            <td className="text-center" >${formatNumber(result["Total Payment"])}</td>
                                         </tr>
                                     ))}
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td className="text-right"><strong>Total</strong></td>
+                                        <td className="text-center" ><strong>${formatNumber(totalCarts.reduce((acc, result) => acc + result["Total Payment"], 0))}</strong></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
+
                     </div>
-                    <div className=''>
-                        <buton className='btn btn-primary' onClick={handleSubmit} >Submit</buton>
+                    <div class="card-footer">
+                        <div class="coupon col-md-5 col-sm-5 no-padding-left pull-left">
+                            <div class="row">
+                                <div class="col-6">
+                                </div>
+                                <div class="col-6">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pull-right">
+                            <a href="" class="btn btn-success pull-right">Checkout</a>
+                            <div class="pull-right">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </div>
             <Footer />
         </main>
     );
