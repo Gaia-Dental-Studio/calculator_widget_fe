@@ -6,7 +6,7 @@ const Header = () => {
         <div className="home nav-gear">
             <div className='container-home nav-gear'>
                 <Link href="/dashboard" className="logo-inline-block" >
-                    <img className='logo-title' src="images/medigear-logo.png" alt="logo-title" />
+                    <img className='logo-title' src="/images/medigear-logo.png" alt="logo-title" />
                 </Link>
                 <div class="menu-link-gear">
                     <Link href="https://medigear.webflow.io/" className="nav-link-gear" >Home</Link>

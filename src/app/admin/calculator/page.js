@@ -1,6 +1,6 @@
 "use client";
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
+import Header from '../../../components/Header';
+import Footer from '../../../components/Footer';
 import {useEffect} from 'react';
 import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
@@ -26,6 +26,7 @@ export default function Dashboard() {
         insurance_opt_in: true,
         BusinessCon: true
     });
+
 
     const product_name = searchParams.get('product_name');
     //setPrice(searchParams.get('price')) ;
@@ -60,6 +61,14 @@ export default function Dashboard() {
         setUpfrontPayment(event.target.value); // Update state with new input value
     };
 
+    const formatNumber = (number) => {
+        // Round the number to the nearest integer
+        const roundedNumber = Math.round(number || 0);
+
+        // Format the number with commas for thousands separator
+        return roundedNumber.toLocaleString('en-US');
+    }
+
     const handleSubmit = async (event) => {
         if (event) event.preventDefault(); // Prevent default if called from submit event
 
@@ -71,15 +80,9 @@ export default function Dashboard() {
             formData[item.name] = value;
         });
 
-        // Handle unchecked checkboxes
-        $('#form_data input[type="checkbox"]').each(function () {
-            if (!this.checked) {
-                formData[this.name] = "No";
-            }
-        });
-
         formData['FreeWarranty'] = price < 75000 ? 1 : 2;
         formData['EquipmentPriceVar'] = parseInt(price);
+
         try {
             //const response = await fetch('http://194.233.67.224:5000/set_user_parameters_scheme_1', {
             const response = await fetch('http://localhost:5000/set_user_parameters_scheme_1', {
@@ -322,13 +325,17 @@ export default function Dashboard() {
             <section className="contact_section layout_padding">
                 <div className="container">
                     <p style={{color: 'grey', fontWeight: '500'}} >Dental Imagging</p>
-                    <div className="">
+                    <div className="row">
                         <div className="custom_heading-container ">
                             <h2>
                                 {formatString(product_name) || "-"}
                             </h2>
                         </div>
-
+                        <div className='row col-lg-6' style={{color: 'grey'}} >
+                            <div className='col-lg-6'> <h4> Start from </h4> </div>
+                            <div className='col-lg-6'> <h4 id="monthlyPaymentId" >$ {formatNumber(months_payment)} AUD/months</h4> </div>
+                        </div>
+                        <p style={{color: "grey"}} >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
                     </div>
                 </div>
                 <div className="container layout_padding2">
@@ -336,6 +343,7 @@ export default function Dashboard() {
                         <div className="col-md-5">
                             <div className="form_contaier">
                                 <form onSubmit={handleSubmit} id='form_data' >
+
                                     <div className="form-group">
                                         <label htmlFor="exampleInputNumber1">Choose Loan Scheme</label>
                                         <select name='scheme' id="inputState" className="form-control">
@@ -377,23 +385,11 @@ export default function Dashboard() {
                                         <button style={{backgroundColor: "#2e77d0"}} type="submit" className="">Calculate</button>
                                         <button onClick={addNewCart} style={{backgroundColor: '#17a2b8', borderColor: '#2e77d0'}} type="button" className="btn btn-success">Add To Cart</button>
                                     </div>
+
                                 </form>
                             </div>
                         </div>
                         <div className="col-md-7">
-                            <div className='row col-lg-12 mt-2' style={{color: 'grey'}} >
-                                <div className='col-lg-6'> <h4> Start from </h4> </div>
-                                <div className='col-lg-6'> <h4 id="monthlyPaymentId" >$ {months_payment.toFixed(2) || "-"} AUD/months</h4> </div>
-                            </div>
-                            <div className='row col-lg-12 mb-2' style={{color: 'grey'}} >
-                                <div className='col-lg-6'> <h4> Loan term </h4> </div>
-                                <div className='col-lg-6'> <h4>{(loan_term || 0) * 12} months</h4> </div>
-                            </div>
-                            <div className='col-lg-12'>
-                                <p style={{color: "grey"}} >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-                            </div>
-                        </div>
-                        <div className="col-md-7" style={{display: 'none'}} >
                             {result && (
                                 <div>
                                     <div className='col-lg-12 row' >
@@ -401,17 +397,17 @@ export default function Dashboard() {
                                             <div className='form-group' data-bs-toggle="tooltip" title="Test Tooltip" >
                                                 <label>Total Price with Package ($)</label>
                                                 <br />
-                                                <h4>{result.results.total_payment}</h4>
+                                                <h4>{formatNumber(result.results.total_payment)}</h4>
                                             </div>
                                             <div className='form-group' >
                                                 <label for="">Monthly Repayment ($)</label>
-                                                <h4>{result.results.monthlyPayment.toFixed(2)}</h4>
+                                                <h4>${formatNumber(result.results.monthlyPayment)}</h4>
                                             </div>
                                         </div>
                                         <div className='col-lg-4'>
                                             <div className='form-group' >
                                                 <label for="">Total Principal ($)</label>
-                                                <h4>{result.results.principal.toFixed(2)}</h4>
+                                                <h4>${formatNumber(result.results.principal)}</h4>
                                             </div>
                                             <div className='form-group' >
                                                 <label for="">Loan Term (Months)</label>
@@ -421,45 +417,45 @@ export default function Dashboard() {
                                         <div className='col-lg-4'>
                                             <div className='form-group' >
                                                 <label for="">Total Added Value Services ($)</label>
-                                                <h4>{result.results.total_added_value.toFixed(2)}</h4>
+                                                <h4>${formatNumber(result.results.total_added_value)}</h4>
                                             </div>
                                             <div className='form-group' >
                                                 <label for="">Terminal Value ($)</label>
-                                                <h4>{result.results.terminal_value.toFixed(2)}</h4>
+                                                <h4>${formatNumber(result.results.terminal_value)}</h4>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className='card mt-3 mb-3'>
                                         <div className='col-lg-12 m-2' >
-                                            <h4 >Detailed Added Value Services Cost</h4>
+                                            <h5 >Detailed Added Value Services Cost</h5>
                                         </div>
                                         <div className='col-lg-12 row'>
                                             <div className='col-lg-4'>
                                                 <div className='form-group' data-bs-toggle="tooltip" title="Test Tooltip" >
                                                     <label>Maintenance Fee ($)</label>
                                                     <br />
-                                                    <h4>{result.results.maintenance_fee.toFixed(2)}</h4>
+                                                    <h4>${formatNumber(result.results.maintenance_fee)}</h4>
                                                 </div>
                                                 <div className='form-group' >
                                                     <label for="">Travel Labor Cost ($)</label>
-                                                    <h4>{result.results.travel_labor_cost.toFixed(2)}</h4>
+                                                    <h4>${formatNumber(result.results.travel_labor_cost)}</h4>
                                                 </div>
                                             </div>
                                             <div className='col-lg-4'>
                                                 <div className='form-group' >
                                                     <label for="">Extra Warranty Fee ($)</label>
-                                                    <h4>{result.results.warranty_fee.toFixed(2)}</h4>
+                                                    <h4>${formatNumber(result.results.warranty_fee)}</h4>
                                                 </div>
                                                 <div className='form-group' >
                                                     <label for="">Business Continuity Fee ($)</label>
-                                                    <h4>{result.results.business_con_fee.toFixed(2)}</h4>
+                                                    <h4>${formatNumber(result.results.business_con_fee)}</h4>
                                                 </div>
                                             </div>
                                             <div className='col-lg-4'>
                                                 <div className='form-group' >
                                                     <label for="">Insurance Fee ($)</label>
-                                                    <h2>{result.results.insurance_fee}</h2>
+                                                    <h4>${formatNumber(result.results.insurance_fee)}</h4>
                                                 </div>
                                                 <div className='form-group' >
 
@@ -468,14 +464,40 @@ export default function Dashboard() {
                                         </div>
                                     </div>
 
+                                    <div className='card mt-3 mb-3'>
+                                        <div className='col-lg-12 m-2' >
+                                            <h5>Optimized Parameter</h5>
+                                        </div>
+                                        <div className='col-lg-12 row'>
+                                            <div className='col-lg-6'>
+                                                <div className='form-group' data-bs-toggle="tooltip" title="Test Tooltip" >
+                                                    <label>Warranty Rate (%)</label>
+                                                    <br />
+                                                    <h4>{formatNumber(result.results.warranty_rate * 100)}%</h4>
+                                                </div>
+                                                <div className='form-group' >
+                                                    <label for="">Insurance Rate (%)</label>
+                                                    <h4>{formatNumber(result.results.insurance_rate * 100)}%</h4>
+                                                </div>
+                                            </div>
+                                            <div className='col-lg-6'>
+                                                <div className='form-group' >
+                                                    <label for="">Maintenance Ratio (%)</label>
+                                                    <h4>{formatNumber(result.results.maintenance_ratio * 100)}%</h4>
+                                                </div>
+                                                <div className='form-group' >
+                                                    <label for="">Business Continuity Rate (%)</label>
+                                                    <h4>{formatNumber(result.results.business_con_rate * 100)}%</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-
-
                             )}
                             <div className='card mt-3 mb-3'>
                                 <div className='col-lg-12' >
                                     <div className='m-2' >
-                                        <h4>Area Chart</h4>
+                                        <h5>Area Chart</h5>
                                     </div>
                                     {/* Render Chart */}
                                     <Chart
@@ -489,7 +511,7 @@ export default function Dashboard() {
                             <div className='card mt-3 mb-3' >
                                 <div className='col-lg-12'>
                                     <div className='m-2' >
-                                        <h4>Donut Chart</h4>
+                                        <h5>Donut Chart</h5>
                                     </div>
                                     <Chart
                                         options={donutChartData.options}
