@@ -7,7 +7,11 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
 import 'owl.carousel/dist/assets/owl.carousel.css'; // Owl Carousel CSS
 import 'owl.carousel/dist/assets/owl.theme.default.css'; // Owl Carousel Theme CSS
 import dynamic from 'next/dynamic';
-import {useSearchParams} from 'next/navigation'
+import {useSearchParams} from 'next/navigation';
+import {checkDesc} from '../../helper/helper';
+import {checkCategory} from '../../helper/helper';
+import {checkImage} from '../../helper/helper';
+
 
 const Chart = dynamic(() => import('react-apexcharts'), {ssr: false});
 
@@ -240,7 +244,7 @@ export default function Dashboard() {
 
     const addNewCart = () => {
         try {
-            result.results.product_name = formatString(product_name) ;
+            result.results.product_name = formatString(product_name);
             const cartId = initializeCartId(); // Ambil cartId yang ada atau inisialisasi
             localStorage.setItem(`cart${cartId}Results`, JSON.stringify(result.results));
             localStorage.setItem(`cart${cartId}Results2`, JSON.stringify(result.results2));
@@ -264,6 +268,14 @@ export default function Dashboard() {
             .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter
             .join(' '); // Join words with a space
     };
+
+    const formatNumber = (number) => {
+        // Round the number to the nearest integer
+        const roundedNumber = Math.round(number || 0);
+
+        // Format the number with commas for thousands separator
+        return roundedNumber.toLocaleString('en-US');
+    }
 
     useEffect(() => {
         $(document).ready(function () {
@@ -322,7 +334,7 @@ export default function Dashboard() {
             <Header />
             <section className="contact_section layout_padding">
                 <div className="container">
-                    <p style={{color: 'grey', fontWeight: '500'}} >Dental Imagging</p>
+                    <p style={{color: 'grey', fontWeight: '500'}} > {checkCategory(product_name)}  </p>
                     <div className="">
                         <div className="custom_heading-container ">
                             <h2>
@@ -382,16 +394,22 @@ export default function Dashboard() {
                             </div>
                         </div>
                         <div className="col-md-7">
-                            <div className='row col-lg-12 mt-2' style={{color: 'grey'}} >
+                            <div className='text-center ' >
+                                {checkImage(product_name)}
+                            </div>
+                            <div className='row col-lg-12 mt-4' style={{color: 'grey'}} >
                                 <div className='col-lg-6'> <h4> Start from </h4> </div>
-                                <div className='col-lg-6'> <h4 id="monthlyPaymentId" >$ {months_payment.toFixed(2) || "-"} AUD/months</h4> </div>
+                                <div className='col-lg-6'> <h4 id="monthlyPaymentId" >$ {formatNumber(months_payment)} AUD/months</h4> </div>
                             </div>
                             <div className='row col-lg-12 mb-2' style={{color: 'grey'}} >
                                 <div className='col-lg-6'> <h4> Loan term </h4> </div>
                                 <div className='col-lg-6'> <h4>{(loan_term || 0) * 12} months</h4> </div>
                             </div>
                             <div className='col-lg-12'>
-                                <p style={{color: "grey"}} >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                                <div style={{fontSize: '14px', color: 'grey'}} className='mt-4' >
+                                    <label style={{fontWeight: 'bold', fontSize: '14px'}} >Product Description </label>
+                                    {checkDesc(product_name)}
+                                </div>
                             </div>
                         </div>
                         <div className="col-md-7" style={{display: 'none'}} >

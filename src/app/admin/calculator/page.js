@@ -8,6 +8,8 @@ import 'owl.carousel/dist/assets/owl.carousel.css'; // Owl Carousel CSS
 import 'owl.carousel/dist/assets/owl.theme.default.css'; // Owl Carousel Theme CSS
 import dynamic from 'next/dynamic';
 import {useSearchParams} from 'next/navigation'
+import {checkDesc} from '../../../helper/helper';
+import {checkCategory} from '../../../helper/helper';
 
 const Chart = dynamic(() => import('react-apexcharts'), {ssr: false});
 
@@ -324,7 +326,7 @@ export default function Dashboard() {
             <Header />
             <section className="contact_section layout_padding">
                 <div className="container">
-                    <p style={{color: 'grey', fontWeight: '500'}} >Dental Imagging</p>
+                    <p style={{color: 'grey', fontWeight: '500'}} >{checkCategory(product_name)}  </p>
                     <div className="row">
                         <div className="custom_heading-container ">
                             <h2>
@@ -335,7 +337,9 @@ export default function Dashboard() {
                             <div className='col-lg-6'> <h4> Start from </h4> </div>
                             <div className='col-lg-6'> <h4 id="monthlyPaymentId" >$ {formatNumber(months_payment)} AUD/months</h4> </div>
                         </div>
-                        <p style={{color: "grey"}} >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                        <div style={{color: "grey"}} >
+                            {checkDesc(product_name)}
+                        </div>
                     </div>
                 </div>
                 <div className="container layout_padding2">
