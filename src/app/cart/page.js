@@ -8,6 +8,8 @@ import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
 import 'owl.carousel/dist/assets/owl.carousel.css'; // Owl Carousel CSS
 import 'owl.carousel/dist/assets/owl.theme.default.css'; // Owl Carousel Theme CSS
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export default function Dashboard() {
     const [carts, setCarts] = useState([]);
@@ -80,6 +82,50 @@ export default function Dashboard() {
         // Format the number with commas for thousands separator
         return roundedNumber.toLocaleString('en-US');
     }
+
+    const deleteDataStorage = (id) => {
+        const isConfirmed = window.confirm('You want to delete this data?');
+        if (isConfirmed) {
+            // Hapus item dari localStorage berdasarkan ID
+            localStorage.removeItem(`cart${id}Results`);
+
+            // Tampilkan pesan sukses
+            alert("Successfully deleted data");
+            window.location.reload();
+        }
+    };
+
+        // Fungsi untuk membuat PDF dari div yang memiliki id 'content'
+    const handleDownloadPdf = () => {
+        const content = document.getElementById('content'); // Ambil elemen dengan id 'content'
+
+        // Mengambil screenshot dari elemen dan mengkonversinya menjadi canvas
+        html2canvas(content).then((canvas) => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4'); // Membuat objek jsPDF
+
+            const imgWidth = 210; // Lebar PDF (A4 ukuran standar dalam mm)
+            const pageHeight = 295; // Tinggi PDF (A4 ukuran standar dalam mm)
+            const imgHeight = (canvas.height * imgWidth) / canvas.width; // Menghitung tinggi gambar proporsional
+            let heightLeft = imgHeight;
+
+            let position = 0;
+
+            // Tambahkan gambar ke PDF, dan tambahkan halaman jika kontennya lebih panjang
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            // Unduh PDF
+            pdf.save('download.pdf');
+        });
+    };
 
 
     useEffect(() => {
@@ -165,7 +211,7 @@ export default function Dashboard() {
         <main>
             <Header />
             <div class="container">
-                <div class="card shopping-cart">
+                <div class="card shopping-cart" id="content" >
                     <div class="card-header bg-dark text-light">
                         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         Shipping cart
@@ -173,7 +219,7 @@ export default function Dashboard() {
                         <div class="clearfix"></div>
                     </div>
                     <div class="card-body">
-                        {carts.map((cart) => (
+                        {carts.map((cart, index) => (
                             <div>
                                 <div class="row">
                                     <div class="col-lg-4">
@@ -190,7 +236,7 @@ export default function Dashboard() {
                                             <h6>Loan Term : <strong>{cart.results.loan_term * 12} Months</strong></h6>
                                         </div>
                                         <div class="col-lg-2 text-md-right" >
-                                            <button type="button" class="btn btn-outline-danger btn-xs">
+                                            <button onClick={() => deleteDataStorage(cart.cartId)} data-key={cart.cartId} type="button" className="btn btn-outline-danger btn-xs">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
                                         </div>
@@ -235,7 +281,7 @@ export default function Dashboard() {
                             </div>
                         </div>
                         <div class="pull-right">
-                            <a href="" class="btn btn-success pull-right">Checkout</a>
+                            <a  onClick={handleDownloadPdf} class="btn btn-success pull-right">Checkout</a>
                             <div class="pull-right">
                             </div>
                         </div>
