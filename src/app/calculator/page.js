@@ -244,7 +244,7 @@ export default function Dashboard() {
 
     const addNewCart = () => {
         try {
-            result.results.product_name = formatString(product_name);
+            result.results.product_name = product_name;
             const cartId = initializeCartId(); // Ambil cartId yang ada atau inisialisasi
             localStorage.setItem(`cart${cartId}Results`, JSON.stringify(result.results));
             localStorage.setItem(`cart${cartId}Results2`, JSON.stringify(result.results2));
@@ -374,7 +374,7 @@ export default function Dashboard() {
                                             <label for="">Business Continuity</label>
                                         </div>
                                     </div>
-                                    <div className="form-group" style={{display:'none'}} >
+                                    <div className="form-group" style={{display: 'none'}} >
                                         <label htmlFor="exampleInputEmail1">Discount Rate (%) </label>
                                         <input name='discount_rate' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeTerminalRate} value={terminal_rate} />
                                     </div>
@@ -382,7 +382,7 @@ export default function Dashboard() {
                                         <label htmlFor="exampleInputEmail1">Extra Warranty (Years) </label>
                                         <input name='ExtraWarranty' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeExtraWarranty} value={extra_warranty} />
                                     </div>
-                                    <div className="form-group" style={{display:'none'}} >
+                                    <div className="form-group" style={{display: 'none'}} >
                                         <label htmlFor="exampleInputEmail1">Percentage to Price (%) </label>
                                         <input name='upfront_payment' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeUpfront} value={upfront_payment} />
                                     </div>
@@ -395,7 +395,9 @@ export default function Dashboard() {
                         </div>
                         <div className="col-md-7">
                             <div className='text-center ' >
-                                {checkImage(product_name)}
+                                <div className='img-items-calculator'>
+                                    {checkImage(product_name)}
+                                </div>
                             </div>
                             <div className='row col-lg-12 mt-4' style={{color: 'grey'}} >
                                 <div className='col-lg-6'> <h4> Start from </h4> </div>

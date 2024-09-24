@@ -10,6 +10,8 @@ import 'owl.carousel/dist/assets/owl.carousel.css'; // Owl Carousel CSS
 import 'owl.carousel/dist/assets/owl.theme.default.css'; // Owl Carousel Theme CSS
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import {checkCategory} from '../../helper/helper';
+import {checkImage} from '../../helper/helper';
 
 export default function Dashboard() {
     const [carts, setCarts] = useState([]);
@@ -95,23 +97,20 @@ export default function Dashboard() {
         }
     };
 
-        // Fungsi untuk membuat PDF dari div yang memiliki id 'content'
     const handleDownloadPdf = () => {
-        const content = document.getElementById('content'); // Ambil elemen dengan id 'content'
+        const content = document.getElementById('content');
 
-        // Mengambil screenshot dari elemen dan mengkonversinya menjadi canvas
         html2canvas(content).then((canvas) => {
             const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('p', 'mm', 'a4'); // Membuat objek jsPDF
+            const pdf = new jsPDF('p', 'mm', 'a4');
 
-            const imgWidth = 210; // Lebar PDF (A4 ukuran standar dalam mm)
-            const pageHeight = 295; // Tinggi PDF (A4 ukuran standar dalam mm)
-            const imgHeight = (canvas.height * imgWidth) / canvas.width; // Menghitung tinggi gambar proporsional
+            const imgWidth = 210;
+            const pageHeight = 295;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
             let heightLeft = imgHeight;
 
             let position = 0;
 
-            // Tambahkan gambar ke PDF, dan tambahkan halaman jika kontennya lebih panjang
             pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
             heightLeft -= pageHeight;
 
@@ -122,11 +121,21 @@ export default function Dashboard() {
                 heightLeft -= pageHeight;
             }
 
-            // Unduh PDF
             pdf.save('download.pdf');
         });
     };
 
+
+    const formatString = (str = "") => {
+        if (str === null) {
+            return;
+        }
+
+        return str
+            .split(/-|_/) // Split the string by dash (-) or underscore (_)
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter
+            .join(' '); // Join words with a space
+    };
 
     useEffect(() => {
         const allCarts = getAllCarts();
@@ -210,47 +219,63 @@ export default function Dashboard() {
     return (
         <main>
             <Header />
-            <div class="container">
-                <div class="card shopping-cart" id="content" >
-                    <div class="card-header bg-dark text-light">
-                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        Shipping cart
-                        <a href="" class="btn btn-sm pull-right"></a>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="card-body">
-                        {carts.map((cart, index) => (
-                            <div>
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <h4 class="product-name"><strong>{cart.results.product_name}</strong></h4>
-                                        <h4>
-                                            <small>Product description</small>
-                                        </h4>
-                                    </div>
-                                    <div class=" text-sm-center col-lg-8 text-md-right row">
-                                        <div class="col-lg-5 text-md-right" >
-                                            <h6>Monthly Payment : <strong>${formatNumber(cart.results.monthlyPayment)}</strong></h6>
-                                        </div>
-                                        <div class="col-lg-5 text-md-right" >
-                                            <h6>Loan Term : <strong>{cart.results.loan_term * 12} Months</strong></h6>
-                                        </div>
-                                        <div class="col-lg-2 text-md-right" >
-                                            <button onClick={() => deleteDataStorage(cart.cartId)} data-key={cart.cartId} type="button" className="btn btn-outline-danger btn-xs">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
+            <div className="container mt-5 p-3 rounded cart">
+                <div className="row no-gutters" id="content">
+                    <div className="col-md-8">
+                        <div className="product-details mr-2">
+                            <a style={{display: "contents"}} href="https://medigear.webflow.io/shop">
+                                <div className="d-flex flex-row align-items-center">
+                                    <i className="fa fa-arrow-left"></i>
+                                    <span className="ml-2">Continue Shopping</span>
+                                </div>
+                            </a>
+                            <hr />
+                            <h6 className="mb-0">Shopping cart</h6>
+                            <div className="d-flex justify-content-between">
+                                <span>You have {carts.length || 0} items in your cart</span>
+                                <div className="d-flex flex-row align-items-center">
+                                    <span className="text-black-50"></span>
+                                    <div className="price ml-2">
+                                        <span className="mr-1"></span>
+                                        <i className=""></i>
                                     </div>
                                 </div>
-                                <hr />
                             </div>
-                        ))}
-                        <div class="">
-                            <table className="table table-bordered">
+                            {carts.map((cart, index) => (
+                                <div className="d-flex justify-content-between align-items-center mt-3 p-2 items rounded">
+                                    <div className="d-flex flex-row">
+                                        <div className="img-items" width="40" >
+                                            {checkImage(cart.results.product_name)}
+                                        </div>
+                                        <div className="ml-2">
+                                            <span className="font-weight-bold d-block">
+                                                {formatString(cart.results.product_name)}
+                                            </span>
+                                            <span className="spec">
+                                                {checkCategory(cart.results.product_name)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="d-flex flex-row align-items-center">
+                                        <span className="d-block">
+                                            {cart.results.loan_term * 12} Months
+                                        </span>
+                                        <span className="d-block ml-5 font-weight-bold">
+                                            ${formatNumber(cart.results.monthlyPayment)}
+                                        </span>
+                                        <i onClick={() => deleteDataStorage(cart.cartId)} data-key={cart.cartId} style={{cursor: 'pointer'}} className="fa fa-trash-alt ml-3 text-black-50"></i>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <div className="payment-info">
+                            <table className="table-collapse">
                                 <thead>
                                     <tr>
                                         <th className="text-center" >Month</th>
-                                        <th className="text-center" >Monthly Repayment ($)</th>
+                                        <th className="text-center" >Monthly Repayment</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -261,29 +286,22 @@ export default function Dashboard() {
                                         </tr>
                                     ))}
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td className="text-right"><strong>Total</strong></td>
-                                        <td className="text-center" ><strong>${formatNumber(totalCarts.reduce((acc, result) => acc + result["Total Payment"], 0))}</strong></td>
-                                    </tr>
-                                </tfoot>
                             </table>
-                        </div>
 
-                    </div>
-                    <div class="card-footer">
-                        <div class="coupon col-md-5 col-sm-5 no-padding-left pull-left">
-                            <div class="row">
-                                <div class="col-6">
-                                </div>
-                                <div class="col-6">
-                                </div>
+                            <hr className="line" />
+                            <div className="d-flex justify-content-between information">
+                                <span>Subtotal</span>
+                                <span>
+                                    ${formatNumber(totalCarts.reduce((acc, result) => acc + result["Total Payment"], 0))}
+                                </span>
                             </div>
-                        </div>
-                        <div class="pull-right">
-                            <a  onClick={handleDownloadPdf} class="btn btn-success pull-right">Checkout</a>
-                            <div class="pull-right">
-                            </div>
+                            <button onClick={handleDownloadPdf} style={{backgroundColor: '#2e77d0', color: 'white'}} className="btn btn-block d-flex justify-content-between mt-3" type="button">
+                                <span>
+                                    ${formatNumber(totalCarts.reduce((acc, result) => acc + result["Total Payment"], 0))}
+                                </span>
+                                <span>Checkout <i className="fa fa-long-arrow-right ml-1"></i>
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </div>

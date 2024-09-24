@@ -1,68 +1,159 @@
-.quantity {
-    float: left;
-    margin-right: 15px;
-    background-color: #eee;
-    position: relative;
-    width: 80px;
-    overflow: hidden
+.container {
+    min-height: 100vh;
 }
 
-.quantity input {
-    margin: 0;
-    text-align: center;
-    width: 15px;
-    height: 15px;
-    padding: 0;
-    float: right;
-    color: #000;
-    font-size: 20px;
-    border: 0;
-    outline: 0;
-    background-color: #F6F6F6
+.img-items img {
+    width: 3vw;
+    border-radius: 6px;
 }
 
-.quantity input.qty {
-    position: relative;
-    border: 0;
+.table-collapse {
+    width: 80%;
+    margin: 0 auto;
+    font-size: 14px;
+}
+
+.table-collapse thead {
+
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    background: #67bcee05;
+    /* Warna background untuk membedakan */
+    position: sticky;
+    z-index: 1;
+
+}
+
+.table-collapse thead {
+    top: 0;
+    /* Tetap di bagian atas */
+}
+
+.table-collapse tbody {
+    display: block;
+    height: 262px;
+    /* Sesuaikan tinggi sesuai kebutuhan */
+    overflow-y: auto;
+    /* Hanya tbody yang bisa di-scroll */
     width: 100%;
-    height: 40px;
-    padding: 10px 25px 10px 10px;
-    text-align: center;
+}
+
+.table-collapse thead tr,
+.table-collapse tbody tr,
+.table-collapse tfoot tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    /* Mengatur layout tabel agar tetap rapi */
+}
+
+.table-collapse tr,
+.table-collapse td {
+    border-bottom: 1px solid black;
+}
+
+.payment-info {
+    background: #67bcee5c;
+    padding: 10px;
+    border-radius: 6px;
+    color: black;
+    /* font-weight: bold; */
+}
+
+.product-details {
+    padding: 10px;
+}
+
+body {
+    background: #eee;
+}
+
+.cart {
+    background: #fff;
+}
+
+.p-about {
+    font-size: 12px;
+}
+
+.table-shadow {
+    -webkit-box-shadow: 5px 5px 15px -2px rgba(0, 0, 0, 0.42);
+    box-shadow: 5px 5px 15px -2px rgba(0, 0, 0, 0.42);
+}
+
+.type {
     font-weight: 400;
-    font-size: 15px;
-    border-radius: 0;
-    background-clip: padding-box
+    font-size: 10px;
 }
 
-.quantity .minus,
-.quantity .plus {
-    line-height: 0;
-    background-clip: padding-box;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-    -webkit-background-size: 6px 30px;
-    -moz-background-size: 6px 30px;
-    color: #bbb;
-    font-size: 20px;
+label.radio {
+    cursor: pointer;
+}
+
+label.radio input {
     position: absolute;
-    height: 50%;
-    border: 0;
-    right: 0;
-    padding: 0;
-    width: 25px;
-    z-index: 3
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 
-.quantity .minus:hover,
-.quantity .plus:hover {
-    background-color: #dad8da
+label.radio span {
+    padding: 1px 12px;
+    border: 2px solid #ada9a9;
+    display: inline-block;
+    color: #8f37aa;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 300;
 }
 
-.quantity .minus {
-    bottom: 0
+label.radio input:checked+span {
+    border-color: #fff;
+    background-color: blue;
+    color: #fff;
 }
 
-.shopping-cart {
-    margin-top: 20px;
+.credit-inputs {
+    background: rgb(102, 102, 221);
+    color: #fff !important;
+    border-color: rgb(102, 102, 221);
+}
+
+.credit-inputs::placeholder {
+    color: #fff;
+    font-size: 13px;
+}
+
+.credit-card-label {
+    font-size: 9px;
+    font-weight: 300;
+}
+
+.form-control.credit-inputs:focus {
+    background: rgb(102, 102, 221);
+    border: rgb(102, 102, 221);
+}
+
+.line {
+    border-bottom: 1px solid rgb(102, 102, 221);
+}
+
+.information span {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.information {
+    margin-bottom: 5px;
+}
+
+.items {
+    -webkit-box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.25);
+    box-shadow: 5px 5px 4px -1px rgba(0, 0, 0, 0.08);
+}
+
+.spec {
+    font-size: 11px;
 }

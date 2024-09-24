@@ -48,23 +48,23 @@ export const checkCategory = (name) => {
 export const checkImage = (name) => {
     if (name === "enbio-pro-5-3l-b-class-autoclave") {
         return (
-            <img style={{width: '20vw'}} loading="lazy" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f06c6a7ee07fcce4fc4a7e_Enbio%20PRO.%20World%27s%20fastest%20class%20B%20autoclave.webp" alt="" sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, 47vw" srcset="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f06c6a7ee07fcce4fc4a7e_Enbio%20PRO.%20World%27s%20fastest%20class%20B%20autoclave-p-500.webp 500w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f06c6a7ee07fcce4fc4a7e_Enbio%20PRO.%20World%27s%20fastest%20class%20B%20autoclave.webp 600w" />
+            <img loading="lazy" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f06c6a7ee07fcce4fc4a7e_Enbio%20PRO.%20World%27s%20fastest%20class%20B%20autoclave.webp" alt="" sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, 47vw" srcset="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f06c6a7ee07fcce4fc4a7e_Enbio%20PRO.%20World%27s%20fastest%20class%20B%20autoclave-p-500.webp 500w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f06c6a7ee07fcce4fc4a7e_Enbio%20PRO.%20World%27s%20fastest%20class%20B%20autoclave.webp 600w" />
         );
     }
     if (name === "runyes-18l-b-autoclave") {
         return (
-            <img style={{width: '20vw'}} loading="lazy" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b8b0bb2895b5e1ae9e8f_runyes%2018L%20B%20autoclave.webp" alt="" sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, 47vw" srcset="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b8b0bb2895b5e1ae9e8f_runyes%2018L%20B%20autoclave-p-500.webp 500w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b8b0bb2895b5e1ae9e8f_runyes%2018L%20B%20autoclave-p-800.webp 800w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b8b0bb2895b5e1ae9e8f_runyes%2018L%20B%20autoclave.webp 1024w" />
+            <img loading="lazy" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b8b0bb2895b5e1ae9e8f_runyes%2018L%20B%20autoclave.webp" alt="" sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, 47vw" srcset="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b8b0bb2895b5e1ae9e8f_runyes%2018L%20B%20autoclave-p-500.webp 500w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b8b0bb2895b5e1ae9e8f_runyes%2018L%20B%20autoclave-p-800.webp 800w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b8b0bb2895b5e1ae9e8f_runyes%2018L%20B%20autoclave.webp 1024w" />
         );
     }
     if (name === "runyes-x-rays-mobile-x-ray") {
         return (
-            <img style={{width: "20vw"}} loading="lazy" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b74ae5cecad0beb97ca5_rix70-dc-mobile-version-2-858x1030.jpg" alt="" sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, 47vw" srcset="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b74ae5cecad0beb97ca5_rix70-dc-mobile-version-2-858x1030-p-500.jpg 500w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b74ae5cecad0beb97ca5_rix70-dc-mobile-version-2-858x1030-p-800.jpg 800w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b74ae5cecad0beb97ca5_rix70-dc-mobile-version-2-858x1030.jpg 858w" />
+            <img loading="lazy" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b74ae5cecad0beb97ca5_rix70-dc-mobile-version-2-858x1030.jpg" alt="" sizes="(max-width: 479px) 92vw, (max-width: 767px) 93vw, 47vw" srcset="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b74ae5cecad0beb97ca5_rix70-dc-mobile-version-2-858x1030-p-500.jpg 500w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b74ae5cecad0beb97ca5_rix70-dc-mobile-version-2-858x1030-p-800.jpg 800w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b74ae5cecad0beb97ca5_rix70-dc-mobile-version-2-858x1030.jpg 858w" />
         );
 
     }
     if (name == "mes-chair-compressor---three-chairs") {
         return (
-            <img style={{width: "20vw"}} loading="lazy" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b6bda11a1dc145d9f8c1_AC300Q_1024x1024.webp" alt="" />
+            <img loading="lazy" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b6bda11a1dc145d9f8c1_AC300Q_1024x1024.webp" alt="" />
         );
     }
     else {
