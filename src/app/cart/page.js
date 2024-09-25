@@ -20,11 +20,18 @@ export default function Dashboard() {
     // State untuk mengatur apakah modal terbuka atau tidak
     const [showModal, setShowModal] = useState(false);
 
+    const [showModalAlert, setShowModalAlert] = useState(false);
+
     // Fungsi untuk membuka modal
     const openModal = () => setShowModal(true);
 
+    const openModalAlert = () =>{
+        setShowModalAlert(true);
+    }; 
+
     // Fungsi untuk menutup modal
     const closeModal = () => setShowModal(false);
+    const closeModalAlert = () => setShowModalAlert(false);
 
     const initializeCartId = () => {
         let cartId = localStorage.getItem('cartId');
@@ -96,8 +103,9 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
         dataPost.fields['Agreement Date'] = today.toLocaleDateString('en-US', options); //buatkan format di ambil dari hari ini seperti tanggal hari ini  "September 5, 2024";
 
         console.log("show me all data => ", dataPost);
-
-        //return;
+        openModalAlert();
+        closeModal();
+        return;
         try {
             const response = await fetch('https://api.airtable.com/v0/appLCog6dSk4upByJ/tbltavHX2g986PzHL', {
                 method: 'POST',
@@ -257,6 +265,37 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
     return (
         <main>
+
+{/* Modal */}
+            {showModalAlert && (
+                <div className="modal fade show d-block" tabIndex="-1" role="dialog">
+                    <div className="modal-dialog modal-fade-in-down" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title"></h5>
+                                <button type="button" className="close" onClick={closeModal}>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                <div className="modal-body" >
+<div class="thank-you-pop">
+							<img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt=""/>
+							<h1>Thank You!</h1>
+							<p>Your submission is received and we will contact you soon</p>
+							<h3 class="cupon-pop">Your Id: <span>12345</span></h3>
+							
+ 						</div>
+                </div>
+
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Backdrop untuk modal */}
+            {showModalAlert && <div className="modal-backdrop fade show"></div>}
+
+
 
             {/* Modal */}
             {showModal && (
