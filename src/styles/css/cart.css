@@ -1,3 +1,17 @@
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+        /* Mulai dari posisi lebih tinggi */
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        /* Kembali ke posisi awal */
+    }
+}
+
 .container {
     min-height: 100vh;
 }
@@ -156,4 +170,10 @@ label.radio input:checked+span {
 
 .spec {
     font-size: 11px;
+}
+
+/* Modal animasi */
+.modal-fade-in-down {
+    animation: fadeInDown 0.5s ease-in-out;
+    /* Durasi dan timing animasi */
 }

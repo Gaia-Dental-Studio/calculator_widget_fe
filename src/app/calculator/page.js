@@ -106,6 +106,7 @@ export default function Dashboard() {
             const totalinterestPayments = interestPayments.reduce((total, current) => parseFloat(total) + parseFloat(current), 0);
             console.log('Success:', result);
             setMonthlyPayment(result.results.monthlyPayment);
+            setUpfrontPayment(result.results.total_upfront);
             setChartData({
                 series: [
                     {
@@ -360,6 +361,16 @@ export default function Dashboard() {
                                         <label htmlFor="exampleInputEmail1">Loan Term (Years)</label>
                                         <input name='LoanTermVar' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeLoanTerm} value={loan_term} />
                                     </div>
+                                    <div className="form-group" style={{display: 'block'}} >
+                                        <label htmlFor="exampleInputEmail1">Upfront Payment (%) </label>
+                                        {/*   <input  type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeUpfront} value={upfront_payment} /> */}
+                                        <select className='form-control' id="" name='upfront_payment'>
+                                            <option value="0">0%</option>
+                                            <option value="10">10%</option>
+                                            <option value="15">15%</option>
+                                            <option value="20">20%</option>
+                                        </select>
+                                    </div>
                                     <div className='d-flex'>
                                         <div className='col-lg-4 text-center' >
                                             <input className='d-block' type="checkbox" name="Maintenance" id="maintenance" style={{margin: "0 auto"}} value={"Yes"} checked={checkboxes.Maintenance} onChange={handleCheckboxChange} />
@@ -382,10 +393,6 @@ export default function Dashboard() {
                                         <label htmlFor="exampleInputEmail1">Extra Warranty (Years) </label>
                                         <input name='ExtraWarranty' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeExtraWarranty} value={extra_warranty} />
                                     </div>
-                                    <div className="form-group" style={{display: 'none'}} >
-                                        <label htmlFor="exampleInputEmail1">Percentage to Price (%) </label>
-                                        <input name='upfront_payment' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeUpfront} value={upfront_payment} />
-                                    </div>
                                     <div className='d-flex justify-content-between' >
                                         <button style={{backgroundColor: "#2e77d0"}} type="submit" className="">Calculate</button>
                                         <button onClick={addNewCart} style={{backgroundColor: '#17a2b8', borderColor: '#2e77d0'}} type="button" className="btn btn-success">Add To Cart</button>
@@ -407,12 +414,19 @@ export default function Dashboard() {
                                 <div className='col-lg-6'> <h4> Loan term </h4> </div>
                                 <div className='col-lg-6'> <h4>{(loan_term || 0) * 12} months</h4> </div>
                             </div>
-                            <div className='col-lg-12'>
+                            <div className='row col-lg-12 mb-2' style={{color: 'grey'}} >
+                                <div className='col-lg-6'> <h4> Upfront payment </h4> </div>
+                                <div className='col-lg-6'> <h4>${formatNumber(upfront_payment)}</h4> </div>
+                            </div>
+                            {/* 
+            <div className='col-lg-12'>
                                 <div style={{fontSize: '14px', color: 'grey'}} className='mt-4' >
                                     <label style={{fontWeight: 'bold', fontSize: '14px'}} >Product Description </label>
                                     {checkDesc(product_name)}
-                                </div>
+                                </div> 
                             </div>
+
+            */}
                         </div>
                         <div className="col-md-7" style={{display: 'none'}} >
                             {result && (

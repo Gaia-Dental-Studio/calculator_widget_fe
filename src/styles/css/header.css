@@ -28,7 +28,7 @@
     padding-left: 32px;
     padding-right: 18px;
     font-family: Poppins, sans-serif;
-    font-size: 18px;
+    font-size: 21px;
     font-style: normal;
     font-weight: 600;
     text-decoration: none;
@@ -94,6 +94,7 @@
 
 .dropdown a:hover {
     background-color: white;
+    text-decoration: none;
 }
 
 .show {

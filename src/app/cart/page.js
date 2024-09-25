@@ -17,6 +17,15 @@ export default function Dashboard() {
     const [carts, setCarts] = useState([]);
     const [totalCarts, setTotalCarts] = useState([]);
 
+    // State untuk mengatur apakah modal terbuka atau tidak
+    const [showModal, setShowModal] = useState(false);
+
+    // Fungsi untuk membuka modal
+    const openModal = () => setShowModal(true);
+
+    // Fungsi untuk menutup modal
+    const closeModal = () => setShowModal(false);
+
     const initializeCartId = () => {
         let cartId = localStorage.getItem('cartId');
         if (!cartId) {
@@ -48,19 +57,49 @@ export default function Dashboard() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        const today = new Date();
+const options = { year: 'numeric', month: 'long', day: 'numeric' }; 
 
-        var dataPost = {
+        let dataPost = {
             "fields": {
-                "Agreement ID": "Test 1",
-                "Interest Rate": 0.12,
-                "Loan Term (Months)": 24
             }
         };
 
-        console.log(dataPost);
+        const personalForm = $('#personal_form').serializeArray();
+        personalForm.forEach(function (item) {
+            dataPost.fields[item.name] = item.value;
+        });
+
+        const getData = getAllCarts();
+        let totaladdedValuePayment = 0;
+        let totalaPrincipal = 0;
+        let totalaMonthlyPayment = 0;
+        for (let i = 0; i < getData.length; i++) {
+            let index = i + 1;
+            dataPost.fields['Product name ' + index] = formatString(getData[i].results.product_name) ;
+            dataPost.fields['Loan Term ' + index] = getData[i].results.loan_term;
+            dataPost.fields['Monthly Payment ' + index] = getData[i].results.monthlyPayment;
+            dataPost.fields['Upfront Payment ' + index] = getData[i].results.upfront_payment;
+            dataPost.fields['Upfront Payment Value ' + index] = getData[i].results.total_upfront;
+            dataPost.fields['Total Principal ' + index] = getData[i].results.principal;
+            dataPost.fields['Maintenance Fee ' + index] = getData[i].results.maintenance_fee;
+            dataPost.fields['Insurance Fee ' + index] = getData[i].results.insurance_fee;
+            dataPost.fields['Business Cont. Fee ' + index] = getData[i].results.business_con_fee;
+            dataPost.fields['Travel Labor Cost ' + index] = getData[i].results.travel_labor_cost;
+            dataPost.fields['Extra Warranty ' + index] = getData[i].results.warranty_fee;
+            dataPost.fields['Total Added Value ' + index] = getData[i].results.total_added_value;
+            dataPost.fields['Total Package ' + index] = 0;
+            dataPost.fields['Terminal Value ' + index] = getData[i].results.terminal_value;
+            //dataPost.fields['Interest Rate ' + index] = getData[i].results.terminal_value;
+        }
+
+        dataPost.fields['Agreement Date'] = today.toLocaleDateString('en-US', options); //buatkan format di ambil dari hari ini seperti tanggal hari ini  "September 5, 2024";
+
+        console.log("show me all data => ", dataPost);
+
         //return;
         try {
-            const response = await fetch('https://api.airtable.com/v0/appLCog6dSk4upByJ/tbl15gz7VpqQKpeg7', {
+            const response = await fetch('https://api.airtable.com/v0/appLCog6dSk4upByJ/tbltavHX2g986PzHL', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -218,17 +257,67 @@ export default function Dashboard() {
 
     return (
         <main>
+
+            {/* Modal */}
+            {showModal && (
+                <div className="modal fade show d-block" tabIndex="-1" role="dialog">
+                    <div className="modal-dialog modal-fade-in-down" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Personal data</h5>
+                                <button type="button" className="close" onClick={closeModal}>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <form onSubmit={handleSubmit} id="personal_form" >
+                                <div className="modal-body">
+                                    <div className="form-group">
+                                        <label for="exampleFormControlInput1">Full Name</label>
+                                        <input name="Full Name" type="text" className="form-control" id="exampleFormControlInput1" placeholder="" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Email address</label>
+                                        <input name="Email" type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Phone Number</label>
+                                        <input name="Phone Number" type="text" class="form-control" id="exampleFormControlInput1" placeholder="" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Address</label>
+                                        <textarea name="Address" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" onClick={closeModal}>
+                                        Close
+                                    </button>
+                                    <button type="submit" className="btn btn-primary">
+                                        Save changes
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Backdrop untuk modal */}
+            {showModal && <div className="modal-backdrop fade show"></div>}
+
             <Header />
             <div className="container mt-5 p-3 rounded cart">
                 <div className="row no-gutters" id="content">
                     <div className="col-md-8">
                         <div className="product-details mr-2">
-                            <a style={{display: "contents"}} href="https://medigear.webflow.io/shop">
-                                <div className="d-flex flex-row align-items-center">
+                            <div className="d-flex flex-row align-items-center">
+                                <a style={{display: "contents"}} href="https://medigear.webflow.io/shop">
                                     <i className="fa fa-arrow-left"></i>
                                     <span className="ml-2">Continue Shopping</span>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                             <hr />
                             <h6 className="mb-0">Shopping cart</h6>
                             <div className="d-flex justify-content-between">
@@ -261,7 +350,7 @@ export default function Dashboard() {
                                             {cart.results.loan_term * 12} Months
                                         </span>
                                         <span className="d-block ml-5 font-weight-bold">
-                                            ${formatNumber(cart.results.monthlyPayment)}
+                                            ${formatNumber(cart.results.monthlyPayment)}/month
                                         </span>
                                         <i onClick={() => deleteDataStorage(cart.cartId)} data-key={cart.cartId} style={{cursor: 'pointer'}} className="fa fa-trash-alt ml-3 text-black-50"></i>
                                     </div>
@@ -292,14 +381,12 @@ export default function Dashboard() {
                             <div className="d-flex justify-content-between information">
                                 <span>Subtotal</span>
                                 <span>
-                                    ${formatNumber(totalCarts.reduce((acc, result) => acc + result["Total Payment"], 0))}
+                                    ${formatNumber(totalCarts.length > 0 ? totalCarts[0]["Total Payment"] : 0)}/month
                                 </span>
                             </div>
-                            <button onClick={handleDownloadPdf} style={{backgroundColor: '#2e77d0', color: 'white'}} className="btn btn-block d-flex justify-content-between mt-3" type="button">
-                                <span>
-                                    ${formatNumber(totalCarts.reduce((acc, result) => acc + result["Total Payment"], 0))}
-                                </span>
-                                <span>Checkout <i className="fa fa-long-arrow-right ml-1"></i>
+                            {/* onClick={handleSubmit} */}
+                            <button onClick={openModal} style={{backgroundColor: '#2e77d0', color: 'white'}} className="text-center btn btn-block mt-3" type="button" data-toggle="modal" data-target="#exampleModal">
+                                <span>Purchase  <i className="fa fa-long-arrow-right ml-1"></i>
                                 </span>
                             </button>
                         </div>
