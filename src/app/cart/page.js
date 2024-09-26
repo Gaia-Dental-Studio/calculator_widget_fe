@@ -16,22 +16,36 @@ import {checkImage} from '../../helper/helper';
 export default function Dashboard() {
     const [carts, setCarts] = useState([]);
     const [totalCarts, setTotalCarts] = useState([]);
-
-    // State untuk mengatur apakah modal terbuka atau tidak
+    const [isClosing, setIsClosing] = useState(false);
     const [showModal, setShowModal] = useState(false);
-
     const [showModalAlert, setShowModalAlert] = useState(false);
 
-    // Fungsi untuk membuka modal
-    const openModal = () => setShowModal(true);
+    const openModal = () => {
+        setIsClosing(false);
+        setShowModal(true);
 
-    const openModalAlert = () =>{
+    };
+
+    const openModalAlert = () => {
+        setIsClosing(false);
         setShowModalAlert(true);
-    }; 
+    };
 
-    // Fungsi untuk menutup modal
-    const closeModal = () => setShowModal(false);
-    const closeModalAlert = () => setShowModalAlert(false);
+    const closeModal = () => {
+        setIsClosing(true);
+        setTimeout(() => {
+            setShowModal(false);
+            setIsClosing(false);
+        }, 300);
+    };
+
+    const closeModalAlert = () => {
+        setIsClosing(true);
+        setTimeout(() => {
+            setShowModalAlert(false);
+            setIsClosing(false);
+        }, 300);
+    };
 
     const initializeCartId = () => {
         let cartId = localStorage.getItem('cartId');
@@ -43,7 +57,7 @@ export default function Dashboard() {
     };
 
     const getAllCarts = () => {
-        const cartId = initializeCartId();  // Ambil cartId terakhir
+        const cartId = initializeCartId(); 
         const carts = [];
 
         for (let i = 1; i < cartId; i++) {
@@ -65,7 +79,7 @@ export default function Dashboard() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const today = new Date();
-const options = { year: 'numeric', month: 'long', day: 'numeric' }; 
+        const options = {year: 'numeric', month: 'long', day: 'numeric'};
 
         let dataPost = {
             "fields": {
@@ -78,13 +92,10 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
         });
 
         const getData = getAllCarts();
-        let totaladdedValuePayment = 0;
-        let totalaPrincipal = 0;
-        let totalaMonthlyPayment = 0;
         for (let i = 0; i < getData.length; i++) {
             let index = i + 1;
-            dataPost.fields['Product name ' + index] = formatString(getData[i].results.product_name) ;
-            dataPost.fields['Loan Term ' + index] = getData[i].results.loan_term;
+            dataPost.fields['Product name ' + index] = formatString(getData[i].results.product_name);
+            dataPost.fields['Loan Term ' + index] = getData[i].results.loan_term / 12;
             dataPost.fields['Monthly Payment ' + index] = getData[i].results.monthlyPayment;
             dataPost.fields['Upfront Payment ' + index] = getData[i].results.upfront_payment;
             dataPost.fields['Upfront Payment Value ' + index] = getData[i].results.total_upfront;
@@ -97,15 +108,14 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
             dataPost.fields['Total Added Value ' + index] = getData[i].results.total_added_value;
             dataPost.fields['Total Package ' + index] = 0;
             dataPost.fields['Terminal Value ' + index] = getData[i].results.terminal_value;
-            //dataPost.fields['Interest Rate ' + index] = getData[i].results.terminal_value;
+            dataPost.fields['Interest Rate ' + index] = getData[i].results.interest_rate;
         }
 
         dataPost.fields['Agreement Date'] = today.toLocaleDateString('en-US', options); //buatkan format di ambil dari hari ini seperti tanggal hari ini  "September 5, 2024";
 
         console.log("show me all data => ", dataPost);
-        openModalAlert();
-        closeModal();
-        return;
+        $('#submit-purchase').hide();
+        $('#spinner-submit').show();
         try {
             const response = await fetch('https://api.airtable.com/v0/appLCog6dSk4upByJ/tbltavHX2g986PzHL', {
                 method: 'POST',
@@ -117,6 +127,8 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
             });
 
             const result = await response.json();
+            closeModal();
+            openModalAlert();
             console.log('Success:', result);
 
         } catch (error) {
@@ -125,20 +137,16 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
     };
 
     const formatNumber = (number) => {
-        // Round the number to the nearest integer
         const roundedNumber = Math.round(number || 0);
 
-        // Format the number with commas for thousands separator
         return roundedNumber.toLocaleString('en-US');
     }
 
     const deleteDataStorage = (id) => {
         const isConfirmed = window.confirm('You want to delete this data?');
         if (isConfirmed) {
-            // Hapus item dari localStorage berdasarkan ID
             localStorage.removeItem(`cart${id}Results`);
 
-            // Tampilkan pesan sukses
             alert("Successfully deleted data");
             window.location.reload();
         }
@@ -266,27 +274,24 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return (
         <main>
 
-{/* Modal */}
+            {/* Modal */}
             {showModalAlert && (
                 <div className="modal fade show d-block" tabIndex="-1" role="dialog">
-                    <div className="modal-dialog modal-fade-in-down" role="document">
+                    <div className={`modal-dialog ${isClosing ? 'modal-fade-out-up' : 'modal-fade-in-down'}`} role="document">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title"></h5>
-                                <button type="button" className="close" onClick={closeModal}>
+                                <button type="button" className="close" onClick={closeModalAlert}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                <div className="modal-body" >
-<div class="thank-you-pop">
-							<img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt=""/>
-							<h1>Thank You!</h1>
-							<p>Your submission is received and we will contact you soon</p>
-							<h3 class="cupon-pop">Your Id: <span>12345</span></h3>
-							
- 						</div>
-                </div>
-
+                            <div className="modal-body" >
+                                <div class="thank-you-pop">
+                                    <img src="http://goactionstations.co.uk/wp-content/uploads/2017/03/Green-Round-Tick.png" alt="" />
+                                    <h1>Thank You!</h1>
+                                    <p>Your submission is received and we will contact you soon</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -300,7 +305,7 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
             {/* Modal */}
             {showModal && (
                 <div className="modal fade show d-block" tabIndex="-1" role="dialog">
-                    <div className="modal-dialog modal-fade-in-down" role="document">
+                    <div className={`modal-dialog ${isClosing ? 'modal-fade-out-up' : 'modal-fade-in-down'}`} role="document">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">Personal data</h5>
@@ -332,8 +337,10 @@ const options = { year: 'numeric', month: 'long', day: 'numeric' };
                                     <button type="button" className="btn btn-secondary" onClick={closeModal}>
                                         Close
                                     </button>
-                                    <button type="submit" className="btn btn-primary">
-                                        Save changes
+                                    <button id="submit-purchase" type="submit" className="btn btn-primary">
+                                        Submit
+                                    </button>
+                                    <button style={{display: "none"}} id="spinner-submit" className="spinner-border text-info">
                                     </button>
                                 </div>
 
