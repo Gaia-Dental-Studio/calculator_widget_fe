@@ -95,7 +95,7 @@ export default function Dashboard() {
         for (let i = 0; i < getData.length; i++) {
             let index = i + 1;
             dataPost.fields['Product name ' + index] = formatString(getData[i].results.product_name);
-            dataPost.fields['Loan Term ' + index] = getData[i].results.loan_term / 12;
+            dataPost.fields['Loan Term ' + index] = ( getData[i].results.loan_term * 12 );
             dataPost.fields['Monthly Payment ' + index] = getData[i].results.monthlyPayment;
             dataPost.fields['Upfront Payment ' + index] = getData[i].results.upfront_payment;
             dataPost.fields['Upfront Payment Value ' + index] = getData[i].results.total_upfront;
@@ -106,14 +106,14 @@ export default function Dashboard() {
             dataPost.fields['Travel Labor Cost ' + index] = getData[i].results.travel_labor_cost;
             dataPost.fields['Extra Warranty ' + index] = getData[i].results.warranty_fee;
             dataPost.fields['Total Added Value ' + index] = getData[i].results.total_added_value;
-            dataPost.fields['Total Package ' + index] = 0;
+            dataPost.fields['Total Package ' + index] = getData[i].results.total_payment;
             dataPost.fields['Terminal Value ' + index] = getData[i].results.terminal_value;
             dataPost.fields['Interest Rate ' + index] = getData[i].results.interest_rate;
         }
 
         dataPost.fields['Agreement Date'] = today.toLocaleDateString('en-US', options); //buatkan format di ambil dari hari ini seperti tanggal hari ini  "September 5, 2024";
-
         console.log("show me all data => ", dataPost);
+        //return;
         $('#submit-purchase').hide();
         $('#spinner-submit').show();
         try {

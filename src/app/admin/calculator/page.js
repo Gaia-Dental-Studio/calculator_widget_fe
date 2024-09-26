@@ -86,8 +86,8 @@ export default function Dashboard() {
         formData['EquipmentPriceVar'] = parseInt(price);
 
         try {
-            //const response = await fetch('http://194.233.67.224:5000/set_user_parameters_scheme_1', {
-            const response = await fetch('http://localhost:5000/set_user_parameters_scheme_1', {
+            const response = await fetch('http://194.233.67.224:5000/set_user_parameters_scheme_1', {
+            //const response = await fetch('http://localhost:5000/set_user_parameters_scheme_1', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
