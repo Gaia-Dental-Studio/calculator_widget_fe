@@ -11,6 +11,7 @@ import {useSearchParams} from 'next/navigation';
 import {checkDesc} from '../../helper/helper';
 import {checkCategory} from '../../helper/helper';
 import {checkImage} from '../../helper/helper';
+import Link from 'next/link';
 
 
 const Chart = dynamic(() => import('react-apexcharts'), {ssr: false});
@@ -345,7 +346,7 @@ export default function Dashboard() {
 
                     </div>
                 </div>
-                <div className="container layout_padding2">
+                <div className="container layout_padding2" style={{maxWidth: "90vw"}}>
                     <div className="row">
                         <div className="col-md-5">
                             <div className="form_contaier">
@@ -371,18 +372,21 @@ export default function Dashboard() {
                                             <option value="20">20%</option>
                                         </select>
                                     </div>
-                                    <div className='d-flex'>
-                                        <div className='col-lg-4 text-center' >
+                                    <div className='row'>
+                                        <div className='col-lg-3 text-center' >
                                             <input className='d-block' type="checkbox" name="Maintenance" id="maintenance" style={{margin: "0 auto"}} value={"Yes"} checked={checkboxes.Maintenance} onChange={handleCheckboxChange} />
                                             <label for="">Maintenance</label>
                                         </div>
-                                        <div className='col-lg-4 text-center' >
+                                        <div className='col-lg-3 text-center' >
                                             <input className='d-block' type="checkbox" name='insurance_opt_in' id="insurance_opt_in" style={{margin: "0 auto"}} value={"Yes"} checked={checkboxes.insurance_opt_in} onChange={handleCheckboxChange} />
                                             <label for="">Insurance</label>
                                         </div>
-                                        <div className='col-lg-4 text-center' >
+                                        <div className='col-lg-3 text-center' >
                                             <input name='BusinessCon' id="BusinessCon" className='d-block' type="checkbox" style={{margin: "0 auto"}} value={"Yes"} checked={checkboxes.BusinessCon} onChange={handleCheckboxChange} />
                                             <label for="">Business Continuity</label>
+                                        </div>
+                                        <div className='col-lg-3 text-center' >
+                                            <a target='_blank' href={`/desc_product/Added-Value-Services.pdf`} >See Detail</a>
                                         </div>
                                     </div>
                                     <div className="form-group" style={{display: 'none'}} >
@@ -393,8 +397,11 @@ export default function Dashboard() {
                                         <label htmlFor="exampleInputEmail1">Extra Warranty (Years) </label>
                                         <input name='ExtraWarranty' type="number" className="form-control" id="exampleInputEmail1" onChange={handleInputChangeExtraWarranty} value={extra_warranty} />
                                     </div>
-                                    <div className='d-flex justify-content-between' >
+                                    <div className='row' >
                                         <button style={{backgroundColor: "#2e77d0"}} type="submit" className="">Calculate</button>
+                                        <a target='_blank' href={`/desc_product/${product_name}.pdf`} style={{display: "contents"}} >
+                                            <button className="btn btn-success" style={{backgroundColor: "#f45252", width:"100%"}} type="button">Product Description</button>
+                                        </a>
                                         <button onClick={addNewCart} style={{backgroundColor: '#17a2b8', borderColor: '#2e77d0'}} type="button" className="btn btn-success">Add To Cart</button>
                                     </div>
                                 </form>
