@@ -67,6 +67,23 @@ export const checkImage = (name) => {
             <img loading="lazy" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0b6bda11a1dc145d9f8c1_AC300Q_1024x1024.webp" alt="" />
         );
     }
+
+    if (name == "mes-ultrasonic-cleaner-10-litres") {
+        return (
+            <img alt="" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0630fa11a1dc1458c25f4_10L%20ultrasonic%20cleaner.webp" sizes="160px" srcset="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0630fa11a1dc1458c25f4_10L%20ultrasonic%20cleaner-p-500.webp 500w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0630fa11a1dc1458c25f4_10L%20ultrasonic%20cleaner-p-800.webp 800w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0630fa11a1dc1458c25f4_10L%20ultrasonic%20cleaner.webp 1024w" class="image-4" />
+        );
+    }
+    if (name == "runyes-23l-b-autoclave") {
+        return (
+            <img alt="" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0cce231c36e4fa1d28b48_Runyes_Touchscreen_autoclave_499x499_2x_1_1024x1024.webp" sizes="160px" srcset="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0cce231c36e4fa1d28b48_Runyes_Touchscreen_autoclave_499x499_2x_1_1024x1024-p-500.webp 500w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f0cce231c36e4fa1d28b48_Runyes_Touchscreen_autoclave_499x499_2x_1_1024x1024.webp 800w" class="image-4" />
+        );
+    }
+    if (name == "runyes-5l-b-fast-cycle-autoclave") {
+        return (
+            <img alt="" data-wf-sku-bindings="%5B%7B%22from%22%3A%22f_main_image_4dr%22%2C%22to%22%3A%22src%22%7D%5D" src="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f068556965511eeaa3bc63_Runyes%205L%20Rapid-cycle%20steriliser.webp" sizes="160px" srcset="https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f068556965511eeaa3bc63_Runyes%205L%20Rapid-cycle%20steriliser-p-500.webp 500w, https://cdn.prod.website-files.com/66e3eea6994462754c30df44/66f068556965511eeaa3bc63_Runyes%205L%20Rapid-cycle%20steriliser.webp 683w" class="image-4" />
+        );
+    }
+
     else {
         return null;
     }
