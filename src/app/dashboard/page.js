@@ -1,5 +1,7 @@
 "use client";
 
+import Header from '../../../components/Header';
+import Footer from '../../../components/Footer';
 import {useEffect} from 'react';
 import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
@@ -54,7 +56,9 @@ export default function Dashboard() {
     }, []);
 
     return (
-        <main>        <div className="hero_area_">
+        <main> 
+        <Header />
+        <div className="hero_area_">
             <header className="header_section">
                 <div className="container">
                     <div className="top_contact-container">
@@ -541,6 +545,8 @@ export default function Dashboard() {
                     </a>
                 </div>
             </section>
+
+            <Footer />
         </main>
     );
 }
