@@ -1,6 +1,8 @@
 
 "use client";
 import {useState} from 'react';
+import {TextField, Button, Box, Grid, Card, CardContent, Typography} from '@mui/material';
+
 
 export default function Home() {
     const [name, setName] = useState('');
@@ -33,43 +35,112 @@ export default function Home() {
     };
 
     return (
-        <div>
-            <h1>Upload Image</h1>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Product Name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
-                <input
-                    type="file"
-                    onChange={(e) => setImage(e.target.files[0])}
-                    accept="image/*"
-                    required
-                />
-                <input
-                    type="file"
-                    onChange={(e) => setPdf(e.target.files[0])}
-                    required
-                />
-                <input
-                    type="text"
-                    onChange={(e) => setCategory(e.target.value)}
-                    required
-                    placeholder='category'
-                    value={category}
-                />
-                <input
-                    type="text"
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                    placeholder='desc'
-                    value={description}
-                />
-                <button type="submit">Upload</button>
-            </form>
-        </div>
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="100vh"
+            sx={{p: 4}}
+        >
+            <Card sx={{maxWidth: 600, width: '100%'}}>
+                <CardContent>
+                    <Typography variant="h5" component="div" gutterBottom>
+                        Upload Product
+                    </Typography>
+                    <form onSubmit={handleSubmit}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    label="Product Name"
+                                    variant="outlined"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    required
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                    fullWidth
+                                >
+                                    Upload Image
+                                    <input
+                                        type="file"
+                                        hidden
+                                        onChange={(e) => setImage(e.target.files[0])}
+                                        accept="image/*"
+                                        required
+                                    />
+                                </Button>
+                                {/* Display the name of the uploaded image */}
+                                {image && (
+                                    <Typography variant="body2" color="textSecondary" sx={{marginTop: 1}}>
+                                        {image.name}
+                                    </Typography>
+                                )}
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <Button
+                                    variant="contained"
+                                    component="label"
+                                    fullWidth
+                                >
+                                    Upload PDF
+                                    <input
+                                        type="file"
+                                        hidden
+                                        onChange={(e) => setPdf(e.target.files[0])}
+                                        required
+                                    />
+                                </Button>
+                                {/* Display the name of the uploaded pdf */}
+                                {pdf && (
+                                    <Typography variant="body2" color="textSecondary" sx={{marginTop: 1}}>
+                                        {pdf.name}
+                                    </Typography>
+                                )}
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    label="Category"
+                                    variant="outlined"
+                                    value={category}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                    required
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    label="Description"
+                                    variant="outlined"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    required
+                                />
+                            </Grid>
+
+                            <Grid item xs={12}>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                >
+                                    Upload
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </form>
+                </CardContent>
+            </Card>
+        </Box>
     );
 }

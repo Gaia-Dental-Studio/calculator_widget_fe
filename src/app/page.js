@@ -34,7 +34,7 @@ export default function Dashboard() {
                         <p>Loading products...</p>
                     ) : (
                         products.map((product) => (
-                            <div className="col-md-4 col-sm-6" key={product.ID}>
+                            <div className="col-md-4 col-sm-6" style={{marginBottom: "30px"}}  key={product.ID}>
                                 <div className="card mb-4" style={{height:"100%"}} >
                                     <a className="card-img-tiles" href="#" data-abc="true">
                                         <div className="inner">
