@@ -6,12 +6,10 @@ import Footer from '../../components/Footer';
 import {useEffect} from 'react';
 import {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
-import 'owl.carousel/dist/assets/owl.carousel.css'; // Owl Carousel CSS
-import 'owl.carousel/dist/assets/owl.theme.default.css'; // Owl Carousel Theme CSS
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import {checkCategory} from '../../helper/helper';
-import {checkImage} from '../../helper/helper';
+//import {checkCategory} from '../../helper/helper';
+//import {checkImage} from '../../helper/helper';
 
 export default function Dashboard() {
     const [carts, setCarts] = useState([]);
@@ -19,6 +17,7 @@ export default function Dashboard() {
     const [isClosing, setIsClosing] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [showModalAlert, setShowModalAlert] = useState(false);
+    //const [productData, setProductData] = useState({});
 
     const openModal = () => {
         setIsClosing(false);
@@ -57,7 +56,7 @@ export default function Dashboard() {
     };
 
     const getAllCarts = () => {
-        const cartId = initializeCartId(); 
+        const cartId = initializeCartId();
         const carts = [];
 
         for (let i = 1; i < cartId; i++) {
@@ -95,7 +94,7 @@ export default function Dashboard() {
         for (let i = 0; i < getData.length; i++) {
             let index = i + 1;
             dataPost.fields['Product name ' + index] = formatString(getData[i].results.product_name);
-            dataPost.fields['Loan Term ' + index] = ( getData[i].results.loan_term * 12 );
+            dataPost.fields['Loan Term ' + index] = (getData[i].results.loan_term * 12);
             dataPost.fields['Monthly Payment ' + index] = getData[i].results.monthlyPayment;
             dataPost.fields['Upfront Payment ' + index] = getData[i].results.upfront_payment;
             dataPost.fields['Upfront Payment Value ' + index] = getData[i].results.total_upfront;
@@ -146,6 +145,7 @@ export default function Dashboard() {
         const isConfirmed = window.confirm('You want to delete this data?');
         if (isConfirmed) {
             localStorage.removeItem(`cart${id}Results`);
+            localStorage.removeItem(`cart${id}Results2`);
 
             alert("Successfully deleted data");
             window.location.reload();
@@ -192,6 +192,21 @@ export default function Dashboard() {
             .join(' '); // Join words with a space
     };
 
+    const idProduct = 19;// searchParams.get('id');
+
+    const fetchProductById = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/v0.0.1/get-product?id=${idProduct}`);
+            const data = await response.json();
+            //setProductData(data);
+
+            return data;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+
     useEffect(() => {
         const allCarts = getAllCarts();
         setCarts(allCarts);
@@ -225,50 +240,7 @@ export default function Dashboard() {
         // Convert totalsByMonth object to an array (optional)
         const resultArray = Object.values(totalsByMonth);
         setTotalCarts(resultArray);
-        console.log(resultArray);
-        console.log(allCarts);
 
-
-        $(document).ready(function () {
-            $(".owl-carousel").owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: true,
-                navText: [],
-                autoplay: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 2
-                    },
-                    1000: {
-                        items: 4
-                    }
-                }
-            });
-
-            // Inisialisasi carousel kedua
-            $(".owl-2").owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: true,
-                navText: [],
-                autoplay: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 2
-                    },
-                    1000: {
-                        items: 4
-                    }
-                }
-            });
-        });
     }, []);
 
     return (
@@ -299,8 +271,6 @@ export default function Dashboard() {
 
             {/* Backdrop untuk modal */}
             {showModalAlert && <div className="modal-backdrop fade show"></div>}
-
-
 
             {/* Modal */}
             {showModal && (
@@ -380,14 +350,14 @@ export default function Dashboard() {
                                 <div className="d-flex justify-content-between align-items-center mt-3 p-2 items rounded">
                                     <div className="d-flex flex-row">
                                         <div className="img-items" width="40" >
-                                            {checkImage(cart.results.product_name)}
+                                            <img src={`http://localhost:8080/${cart.results.product_image || ""}`} alt="" />
                                         </div>
                                         <div className="ml-2">
                                             <span className="font-weight-bold d-block">
                                                 {formatString(cart.results.product_name)}
                                             </span>
                                             <span className="spec">
-                                                {checkCategory(cart.results.product_name)}
+                                                {cart.results.product_category || "" }
                                             </span>
                                         </div>
                                     </div>

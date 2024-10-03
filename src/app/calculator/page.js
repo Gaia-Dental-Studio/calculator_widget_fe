@@ -233,7 +233,9 @@ export default function Dashboard() {
 
     const addNewCart = () => {
         try {
-            result.results.product_name = product_name;
+            result.results.product_name = productData.name_product;
+            result.results.product_image = productData.image;
+            result.results.product_category = productData.category;
             const cartId = initializeCartId(); 
             localStorage.setItem(`cart${cartId}Results`, JSON.stringify(result.results));
             localStorage.setItem(`cart${cartId}Results2`, JSON.stringify(result.results2));
