@@ -3,70 +3,59 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import {useEffect} from 'react';
 import {useState} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
-import 'owl.carousel/dist/assets/owl.carousel.css'; // Owl Carousel CSS
-import 'owl.carousel/dist/assets/owl.theme.default.css'; // Owl Carousel Theme CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
 import dynamic from 'next/dynamic';
 import {useSearchParams} from 'next/navigation';
-import {checkDesc} from '../../helper/helper';
-import {checkCategory} from '../../helper/helper';
-import {checkImage} from '../../helper/helper';
-import Link from 'next/link';
-
 
 const Chart = dynamic(() => import('react-apexcharts'), {ssr: false});
 
 export default function Dashboard() {
     const [result, setResult] = useState(null);
-    const [resultCollection, setResultCollection] = useState(null);
     const searchParams = useSearchParams();
-    const [price, setPrice] = useState(searchParams.get('price')); // Initialize state for input
-    const [loan_term, setLoanTerm] = useState(2); // Initialize state for input
-    const [months_payment, setMonthlyPayment] = useState(0); // Initialize state for input
-    const [terminal_rate, setTerminalRate] = useState(0); // Initialize state for input
-    const [upfront_payment, setUpfrontPayment] = useState(0); // Initialize state for input
-    const [extra_warranty, setExtraWarranty] = useState(2); // Initialize state for input
+    const [price, setPrice] = useState(searchParams.get('price'));
+    const [loan_term, setLoanTerm] = useState(2); 
+    const [months_payment, setMonthlyPayment] = useState(0); 
+    const [terminal_rate, setTerminalRate] = useState(0); 
+    const [upfront_payment, setUpfrontPayment] = useState(0); 
+    const [extra_warranty, setExtraWarranty] = useState(2); 
     const [checkboxes, setCheckboxes] = useState({
         Maintenance: true,
         insurance_opt_in: true,
         BusinessCon: true
     });
+    const [productData, setProductData] = useState({});
 
     const product_name = searchParams.get('product_name');
-    //setPrice(searchParams.get('price')) ;
     const free_warranty = searchParams.get('free_warranty');
-    //const price = searchParams.get('price');
     const handleInputChange = (event) => {
-        setPrice(event.target.value); // Update state with new input value
+        setPrice(event.target.value); 
     };
 
-    // Handle the change for multiple checkboxes
     const handleCheckboxChange = (event) => {
         const {name, checked} = event.target;
 
-        // Update the state for the specific checkbox
         setCheckboxes({
-            ...checkboxes, // Keep the current state of other checkboxes
-            [name]: checked // Update the state of the changed checkbox
+            ...checkboxes, 
+            [name]: checked 
         });
     };
 
     const handleInputChangeLoanTerm = (event) => {
-        setLoanTerm(event.target.value); // Update state with new input value
+        setLoanTerm(event.target.value); 
     };
 
     const handleInputChangeExtraWarranty = (event) => {
-        setExtraWarranty(event.target.value); // Update state with new input value
+        setExtraWarranty(event.target.value); 
     };
     const handleInputChangeTerminalRate = (event) => {
-        setTerminalRate(event.target.value); // Update state with new input value
+        setTerminalRate(event.target.value); 
     };
     const handleInputChangeUpfront = (event) => {
-        setUpfrontPayment(event.target.value); // Update state with new input value
+        setUpfrontPayment(event.target.value); 
     };
 
     const handleSubmit = async (event) => {
-        if (event) event.preventDefault(); // Prevent default if called from submit event
+        if (event) event.preventDefault(); 
 
         var formArray = $('#form_data').serializeArray();
         var formData = {};
@@ -76,7 +65,6 @@ export default function Dashboard() {
             formData[item.name] = value;
         });
 
-        // Handle unchecked checkboxes
         $('#form_data input[type="checkbox"]').each(function () {
             if (!this.checked) {
                 formData[this.name] = "No";
@@ -86,8 +74,8 @@ export default function Dashboard() {
         formData['FreeWarranty'] = price < 75000 ? 1 : 2;
         formData['EquipmentPriceVar'] = parseInt(price);
         try {
-            const response = await fetch('http://194.233.67.224:5000/set_user_parameters_scheme_1', {
-            //const response = await fetch('http://localhost:5000/set_user_parameters_scheme_1', {
+            //const response = await fetch('http://194.233.67.224:5000/set_user_parameters_scheme_1', {
+                const response = await fetch('http://localhost:5000/set_user_parameters_scheme_1', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -231,27 +219,25 @@ export default function Dashboard() {
         let cartId = localStorage.getItem('cartId');
         if (!cartId) {
             cartId = 1;
-            localStorage.setItem('cartId', cartId); // Inisialisasi dengan nilai 1
+            localStorage.setItem('cartId', cartId);
         }
         return parseInt(cartId);
     };
 
-    // Update cartId setelah cart baru ditambahkan
     const incrementCartId = () => {
         let cartId = localStorage.getItem('cartId');
         cartId = parseInt(cartId) + 1;
-        localStorage.setItem('cartId', cartId);  // Update ke cartId baru
+        localStorage.setItem('cartId', cartId);  
         return cartId;
     };
 
     const addNewCart = () => {
         try {
             result.results.product_name = product_name;
-            const cartId = initializeCartId(); // Ambil cartId yang ada atau inisialisasi
+            const cartId = initializeCartId(); 
             localStorage.setItem(`cart${cartId}Results`, JSON.stringify(result.results));
             localStorage.setItem(`cart${cartId}Results2`, JSON.stringify(result.results2));
 
-            // Tingkatkan cartId setelah cart baru ditambahkan
             incrementCartId();
             alert("New cart added successfully!");
             window.location.reload();
@@ -280,52 +266,28 @@ export default function Dashboard() {
     }
 
     useEffect(() => {
+
+        const idProduct = searchParams.get('id');
+
+        const fetchProductById = async () => {
+            try {
+                const response = await fetch(`http://localhost:8080/api/v0.0.1/get-product?id=${idProduct}`);
+                const data = await response.json();
+                setProductData(data);
+                setPrice(data.price);
+                console.log(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchProductById();
+
         $(document).ready(function () {
             // Call handleSubmit after a delay of 1 second (1000 milliseconds)
             setTimeout(function () {
                 handleSubmit(); // Call handleSubmit without event argument
             }, 1000);
-
-            //$('[data-bs-toggle="tooltip"]').tooltip();
-            // Inisialisasi carousel pertama
-            $(".owl-carousel").owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: true,
-                navText: [],
-                autoplay: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 2
-                    },
-                    1000: {
-                        items: 4
-                    }
-                }
-            });
-
-            // Inisialisasi carousel kedua
-            $(".owl-2").owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: true,
-                navText: [],
-                autoplay: true,
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 2
-                    },
-                    1000: {
-                        items: 4
-                    }
-                }
-            });
 
         });
 
@@ -336,11 +298,11 @@ export default function Dashboard() {
             <Header />
             <section className="contact_section layout_padding">
                 <div className="container">
-                    <p style={{color: 'grey', fontWeight: '500'}} > {checkCategory(product_name)}  </p>
+                    <p style={{color: 'grey', fontWeight: '500'}} > {productData.category || ""}  </p>
                     <div className="">
                         <div className="custom_heading-container ">
                             <h2>
-                                {formatString(product_name) || "-"}
+                                {formatString(productData.name_product) || "-"}
                             </h2>
                         </div>
 
@@ -399,8 +361,8 @@ export default function Dashboard() {
                                     </div>
                                     <div className='row' >
                                         <button style={{backgroundColor: "#2e77d0"}} type="submit" className="">Calculate</button>
-                                        <a target='_blank' href={`/desc_product/${product_name}.pdf`} style={{display: "contents"}} >
-                                            <button className="btn btn-success" style={{backgroundColor: "#f45252", width:"100%"}} type="button">Product Description</button>
+                                        <a target='_blank' href={`http://localhost:8080/${productData.document || ""}`} style={{display: "contents"}} >
+                                            <button className="btn btn-success" style={{backgroundColor: "#f45252", width: "100%"}} type="button">Product Description</button>
                                         </a>
                                         <button onClick={addNewCart} style={{backgroundColor: '#17a2b8', borderColor: '#2e77d0'}} type="button" className="btn btn-success">Add To Cart</button>
                                     </div>
@@ -410,7 +372,8 @@ export default function Dashboard() {
                         <div className="col-md-7">
                             <div className='text-center ' >
                                 <div className='img-items-calculator'>
-                                    {checkImage(product_name)}
+                                    {/*checkImage(product_name)*/}
+                                    <img src={`http://localhost:8080/${productData.image || ""}`} alt="" />
                                 </div>
                             </div>
                             <div className='row col-lg-12 mt-4' style={{color: 'grey'}} >

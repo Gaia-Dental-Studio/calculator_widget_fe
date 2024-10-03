@@ -10,6 +10,8 @@ export default function Home() {
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
     const [pdf, setPdf] = useState(null);
+    const [price, setPrice] = useState(0);
+    const [free_warranty, setFreeWarranty] = useState(0);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,6 +22,8 @@ export default function Home() {
         formData.append('description', description);
         formData.append('category', category);
         formData.append('pdf', pdf);
+        formData.append('price', price);
+        formData.append('free_warranty', free_warranty);
 
         const response = await fetch('http://localhost:8080/api/v0.0.1/create-product', {
             method: 'POST',
@@ -123,6 +127,28 @@ export default function Home() {
                                     variant="outlined"
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
+                                    required
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    label="Price"
+                                    variant="outlined"
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                    type="number"
+                                    required
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    label="Free Warranty"
+                                    variant="outlined"
+                                    value={free_warranty}
+                                    onChange={(e) => setFreeWarranty(e.target.value)}
+                                    type="number"
                                     required
                                 />
                             </Grid>

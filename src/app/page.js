@@ -34,8 +34,8 @@ export default function Dashboard() {
                         <p>Loading products...</p>
                     ) : (
                         products.map((product) => (
-                            <div className="col-md-4 col-sm-6" style={{marginBottom: "30px"}}  key={product.ID}>
-                                <div className="card mb-4" style={{height:"100%"}} >
+                            <div className="col-md-4 col-sm-6" style={{marginBottom: "30px"}} key={product.ID}>
+                                <div className="card mb-4" style={{height: "100%"}} >
                                     <a className="card-img-tiles" href="#" data-abc="true">
                                         <div className="inner">
                                             <div className="main-img">
@@ -50,9 +50,16 @@ export default function Dashboard() {
                                     <div className="card-body text-center">
                                         <h4 className="card-title">{product.name_product}</h4>
                                         <p className="text-muted">Starting from $ </p>
-                                        <a className="btn btn-outline-primary btn-sm" href="#" data-abc="true">
-                                            View Products
-                                        </a>
+                                        <Link className="btn btn-outline-primary btn-sm"
+                                            href={{
+                                                pathname: '/calculator',
+                                                query: {
+                                                    id: product.ID,
+                                                    price: product.price,
+                                                    free_warranty: product.free_warranty
+                                                },
+                                            }}
+                                        >                                             View Products </Link>
                                     </div>
                                 </div>
                             </div>
