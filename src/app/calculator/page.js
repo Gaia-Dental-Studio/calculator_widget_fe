@@ -13,11 +13,11 @@ export default function Dashboard() {
     const [result, setResult] = useState(null);
     const searchParams = useSearchParams();
     const [price, setPrice] = useState(searchParams.get('price'));
-    const [loan_term, setLoanTerm] = useState(2); 
-    const [months_payment, setMonthlyPayment] = useState(0); 
-    const [terminal_rate, setTerminalRate] = useState(0); 
-    const [upfront_payment, setUpfrontPayment] = useState(0); 
-    const [extra_warranty, setExtraWarranty] = useState(2); 
+    const [loan_term, setLoanTerm] = useState(2);
+    const [months_payment, setMonthlyPayment] = useState(0);
+    const [terminal_rate, setTerminalRate] = useState(0);
+    const [upfront_payment, setUpfrontPayment] = useState(0);
+    const [extra_warranty, setExtraWarranty] = useState(2);
     const [checkboxes, setCheckboxes] = useState({
         Maintenance: true,
         insurance_opt_in: true,
@@ -28,34 +28,34 @@ export default function Dashboard() {
     const product_name = searchParams.get('product_name');
     const free_warranty = searchParams.get('free_warranty');
     const handleInputChange = (event) => {
-        setPrice(event.target.value); 
+        setPrice(event.target.value);
     };
 
     const handleCheckboxChange = (event) => {
         const {name, checked} = event.target;
 
         setCheckboxes({
-            ...checkboxes, 
-            [name]: checked 
+            ...checkboxes,
+            [name]: checked
         });
     };
 
     const handleInputChangeLoanTerm = (event) => {
-        setLoanTerm(event.target.value); 
+        setLoanTerm(event.target.value);
     };
 
     const handleInputChangeExtraWarranty = (event) => {
-        setExtraWarranty(event.target.value); 
+        setExtraWarranty(event.target.value);
     };
     const handleInputChangeTerminalRate = (event) => {
-        setTerminalRate(event.target.value); 
+        setTerminalRate(event.target.value);
     };
     const handleInputChangeUpfront = (event) => {
-        setUpfrontPayment(event.target.value); 
+        setUpfrontPayment(event.target.value);
     };
 
     const handleSubmit = async (event) => {
-        if (event) event.preventDefault(); 
+        if (event) event.preventDefault();
 
         var formArray = $('#form_data').serializeArray();
         var formData = {};
@@ -74,8 +74,8 @@ export default function Dashboard() {
         formData['FreeWarranty'] = price < 75000 ? 1 : 2;
         formData['EquipmentPriceVar'] = parseInt(price);
         try {
-            //const response = await fetch('http://194.233.67.224:5000/set_user_parameters_scheme_1', {
-                const response = await fetch('http://localhost:5000/set_user_parameters_scheme_1', {
+            const apiUrl = process.env.NEXT_PUBLIC_URL_MODEL;
+            const response = await fetch(`${apiUrl}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -227,7 +227,7 @@ export default function Dashboard() {
     const incrementCartId = () => {
         let cartId = localStorage.getItem('cartId');
         cartId = parseInt(cartId) + 1;
-        localStorage.setItem('cartId', cartId);  
+        localStorage.setItem('cartId', cartId);
         return cartId;
     };
 
@@ -236,7 +236,7 @@ export default function Dashboard() {
             result.results.product_name = productData.name_product;
             result.results.product_image = productData.image;
             result.results.product_category = productData.category;
-            const cartId = initializeCartId(); 
+            const cartId = initializeCartId();
             localStorage.setItem(`cart${cartId}Results`, JSON.stringify(result.results));
             localStorage.setItem(`cart${cartId}Results2`, JSON.stringify(result.results2));
 
@@ -273,7 +273,9 @@ export default function Dashboard() {
 
         const fetchProductById = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/api/v0.0.1/get-product?id=${idProduct}`);
+
+                const apiUrlBe = process.env.NEXT_PUBLIC_URL_BE;
+                const response = await fetch(`${apiUrlBe}/api/v0.0.1/get-product?id=${idProduct}`);
                 const data = await response.json();
                 setProductData(data);
                 setPrice(data.price);
@@ -363,7 +365,7 @@ export default function Dashboard() {
                                     </div>
                                     <div className='row' >
                                         <button style={{backgroundColor: "#2e77d0"}} type="submit" className="">Calculate</button>
-                                        <a target='_blank' href={`http://localhost:8080/${productData.document || ""}`} style={{display: "contents"}} >
+                                        <a target='_blank' href={`${process.env.NEXT_PUBLIC_URL_BE}/${productData.document || ""}`} style={{display: "contents"}} >
                                             <button className="btn btn-success" style={{backgroundColor: "#f45252", width: "100%"}} type="button">Product Description</button>
                                         </a>
                                         <button onClick={addNewCart} style={{backgroundColor: '#17a2b8', borderColor: '#2e77d0'}} type="button" className="btn btn-success">Add To Cart</button>
@@ -375,7 +377,7 @@ export default function Dashboard() {
                             <div className='text-center ' >
                                 <div className='img-items-calculator'>
                                     {/*checkImage(product_name)*/}
-                                    <img src={`http://localhost:8080/${productData.image || ""}`} alt="" />
+                                    <img src={`${process.env.NEXT_PUBLIC_URL_BE}/${productData.image || ""}`} alt="" />
                                 </div>
                             </div>
                             <div className='row col-lg-12 mt-4' style={{color: 'grey'}} >
