@@ -5,6 +5,8 @@ import {TextField, Button, Box, Grid, Card, CardContent, Typography} from '@mui/
 
 
 export default function Home() {
+
+    const goApiUrl = process.env.NEXT_PUBLIC_URL_BE;
     const [name, setName] = useState('');
     const [image, setImage] = useState(null);
     const [description, setDescription] = useState('');
@@ -25,7 +27,7 @@ export default function Home() {
         formData.append('price', price);
         formData.append('free_warranty', free_warranty);
 
-        const response = await fetch('http://localhost:8080/api/v0.0.1/create-product', {
+        const response = await fetch(`${goApiUrl}/product/create`, {
             method: 'POST',
             body: formData,
         });
