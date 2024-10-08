@@ -10,11 +10,12 @@ import Link from 'next/link';
 
 export default function Dashboard() {
     const [products, setProducts] = useState([]);
+    const goApiUrl = process.env.NEXT_PUBLIC_URL_BE;
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/v0.0.1/get-products'); // Ganti dengan URL API sebenarnya
+                const response = await fetch(`${goApiUrl}/product/products`);
                 const data = await response.json();
                 setProducts(data); // Menyimpan data produk ke state
             } catch (error) {

@@ -350,7 +350,7 @@ export default function Dashboard() {
                                 <div className="d-flex justify-content-between align-items-center mt-3 p-2 items rounded">
                                     <div className="d-flex flex-row">
                                         <div className="img-items" width="40" >
-                                            <img src={`${process.env.NEXT_PUBLIC_URL_BE}/${cart.results.product_image || ""}`} alt="" />
+                                            <img src={`${process.env.NEXT_PUBLIC_URL_ASSET}/${cart.results.product_image || ""}`} alt="" />
                                         </div>
                                         <div className="ml-2">
                                             <span className="font-weight-bold d-block">

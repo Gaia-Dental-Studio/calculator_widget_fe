@@ -275,7 +275,7 @@ export default function Dashboard() {
             try {
 
                 const apiUrlBe = process.env.NEXT_PUBLIC_URL_BE;
-                const response = await fetch(`${apiUrlBe}/api/v0.0.1/get-product?id=${idProduct}`);
+                const response = await fetch(`${apiUrlBe}/product/product?id=${idProduct}`);
                 const data = await response.json();
                 setProductData(data);
                 setPrice(data.price);
@@ -365,7 +365,7 @@ export default function Dashboard() {
                                     </div>
                                     <div className='row' >
                                         <button style={{backgroundColor: "#2e77d0"}} type="submit" className="">Calculate</button>
-                                        <a target='_blank' href={`${process.env.NEXT_PUBLIC_URL_BE}/${productData.document || ""}`} style={{display: "contents"}} >
+                                        <a target='_blank' href={`${process.env.NEXT_PUBLIC_URL_ASSET}/${productData.document || ""}`} style={{display: "contents"}} >
                                             <button className="btn btn-success" style={{backgroundColor: "#f45252", width: "100%"}} type="button">Product Description</button>
                                         </a>
                                         <button onClick={addNewCart} style={{backgroundColor: '#17a2b8', borderColor: '#2e77d0'}} type="button" className="btn btn-success">Add To Cart</button>
@@ -377,7 +377,7 @@ export default function Dashboard() {
                             <div className='text-center ' >
                                 <div className='img-items-calculator'>
                                     {/*checkImage(product_name)*/}
-                                    <img src={`${process.env.NEXT_PUBLIC_URL_BE}/${productData.image || ""}`} alt="" />
+                                    <img src={`${process.env.NEXT_PUBLIC_URL_ASSET}/${productData.image || ""}`} alt="" />
                                 </div>
                             </div>
                             <div className='row col-lg-12 mt-4' style={{color: 'grey'}} >
